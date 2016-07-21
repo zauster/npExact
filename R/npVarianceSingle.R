@@ -255,7 +255,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
                    null.value = null.value),
               class = "nphtest")
 }
-    p <- 2 * v / (upper - lower)^2  ## normalized threshold
+    ## p <- 2 * v / (upper - lower)^2  ## normalized threshold
 
 
 sampleBinomTestnpVar <- function(p, n, pseudoalpha, dots)

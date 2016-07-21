@@ -1,6 +1,4 @@
 
-
-source("/home/reitero/Arbeit/Rprogramming/npExact/npExact/R/npMeanUnpaired.R")
 context("npMeanUnpaired")
 
 ones <- rep(1, 20)

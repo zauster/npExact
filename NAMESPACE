@@ -5,3 +5,6 @@ export(npMeanSingle)
 export(npMeanUnpaired)
 export(npStochinUnpaired)
 export(npVarianceSingle)
+
+importFrom("stats", "complete.cases", "dbinom", "dhyper", "optimize",
+           "pbinom", "phyper", "runif", "uniroot", "var")

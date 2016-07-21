@@ -1,6 +1,5 @@
 
 
-source("/home/reitero/Arbeit/Rprogramming/npExact/npExact/R/npMeanPaired.R")
 context("npMeanPaired")
 
 ones <- rep(1, 20)

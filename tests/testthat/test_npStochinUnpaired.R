@@ -1,5 +1,4 @@
 
-source("/home/reitero/Arbeit/Rprogramming/npExact/npExact/R/npStochinUnpaired.R")
 context("npStochinUnpaired")
 
 ones <- rep(1, 20)
