@@ -1,3 +1,10 @@
 language: r
 cache: packages
 warnings_are_errors: true
+
+r_packages:
+  - testthat
+  - covr
+
+after_sucess:
+  - Rscript -e 'library(covr); coveralls()'  
