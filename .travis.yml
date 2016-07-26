@@ -6,8 +6,11 @@ r_packages:
   - testthat
   - covr
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+# after_success:
+#   - bash <(curl -s https://codecov.io/bash)
 
 # after_sucess:
 #   - Rscript -e 'library(covr); coveralls()'  
+
+after_success:
+  - Rscript -e 'library(covr); codecov()'
