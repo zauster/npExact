@@ -1,7 +1,14 @@
-
-## does a one-sided test for a single variable
-## i.e. for the npMeanSingle or the npVarianceSingle test
-
+## Does a one-sided test for a single variable
+##
+## Does a one-sided test for a single variable, i.e. for the
+## npMeanSingle or the npVarianceSingle test
+## @param alpha alpha
+## @param epsilon epsilon
+## @param iterations iterations
+## @param max.iterations maximum iterations
+## @param testfunction the test function
+## @param p,n parametr
+## @importFrom stats uniroot
 doOneVariableTest <- function(alpha, epsilon,
                               iterations, max.iterations,
                               testFunction, p, n, ...)

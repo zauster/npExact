@@ -177,3 +177,28 @@ test_that("npStochinUnpaired, no theta calculation, greater",
 res <- npStochinUnpaired(x1, x2, alternative = "less")
 test_that("npStochinUnpaired, no theta calculation, less",
           expect_true(is.null(res$theta)))
+
+##
+## with duplicates in x1 and x2
+## x1, x2 as data.frames
+## alternative = two.sided: choose d.alt from "less" and "greater"-alternatives
+## 
+mostly.ones <- data.frame(ones = c(rep(1, 15), rep(0, 8)))
+mostly.zeros <- data.frame(zeros = c(rep(0, 14), rep(1, 9)))
+
+res <- npStochinUnpaired(mostly.ones, mostly.zeros)
+test_that("positive d.alt",
+          expect_equal(res$d.alternative, 0.561, tolerance = .001))
+
+res <- npStochinUnpaired(mostly.zeros, mostly.ones)
+test_that("positive d.alt",
+          expect_equal(res$d.alternative, 0.561, tolerance = .001))
+
+mostly.zeros[["zeros"]][4] <- NA
+test_that("complain about NA",
+          expect_error(npStochinUnpaired(mostly.zeros, mostly.ones)))
+
+res <- npStochinUnpaired(mostly.zeros, mostly.ones,
+                         ignoreNA = TRUE)
+test_that("positive probability of rejection",
+          expect_true(res$probrej >= 0))

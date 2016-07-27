@@ -43,15 +43,15 @@ test_that("d.alt < null.value",
           expect_true(res$d.alternative < res$null.value))
 
 
-set.seed(8909)
-x1 <- runif(30) * 4
-x2 <- runif(30) * 4
+## set.seed(8909)
+## x1 <- runif(30) * 4
+## x2 <- runif(30) * 4
 
-npMeanPaired(x1, x2, lower = -2, upper = 4)
-res <- npMeanPaired(x1, x2, lower = -2, upper = 4,
-             alternative = "less", alpha = 0.025)
-npMeanPaired(x1, x2, lower = -2, upper = 4,
-             alternative = "greater", alpha = 0.025)
+## npMeanPaired(x1, x2, lower = -2, upper = 4)
+## res <- npMeanPaired(x1, x2, lower = -2, upper = 4,
+##              alternative = "less", alpha = 0.025)
+## npMeanPaired(x1, x2, lower = -2, upper = 4,
+##              alternative = "greater", alpha = 0.025)
 
 
 

@@ -134,7 +134,8 @@ NULL
 ##' data(mshscores)
 ##' scores <- as.vector(as.matrix(mshscores))
 ##' npVarianceSingle(scores, lower = 0, upper = 1, v = 0.05, ignoreNA = TRUE)
-##' 
+##'
+##' @import stats
 NULL
 
 

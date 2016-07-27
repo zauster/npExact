@@ -5,28 +5,14 @@
 
 noValidTheta <- simpleError("It was not possible to find a valid theta (i.e., one that minimizes the type II error). Please adjust the test value under the null hypothesis to a less (extreme) value.")
 
-## w
 ## helper function, to ease the reading of the code
-
 w <- function(x)
     {
         as.numeric(x >= 0)
     }
 
-## g1
-## helper function
-## g1 <- function(k, N, z, alpha = 0.05)
-##   {
-##     summationterm1 <- alpha - pbinom(k - 1, N, z, lower.tail = FALSE)
-##     summationterm2 <- alpha - pbinom(k, N, z, lower.tail = FALSE)
-##     term3 <- summationterm2/dbinom(k, N, z)
-##     res <- w(summationterm1) + (1 - w(summationterm1)) *
-##   (w(summationterm2)) * term3
-##     res
-##   }
-
-## second version is faster
-
+## g1 helper function
+## @importFrom stats pbinom
 g1 <- function(k, N, z, alpha = 0.05)
     {
         ## if alpha < term2 -> 0

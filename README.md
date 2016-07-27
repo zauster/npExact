@@ -1,7 +1,6 @@
 npExact
 =======
 [![Travis-CI Build Status](https://travis-ci.org/zauster/npExact.png?branch=master)](https://travis-ci.org/zauster/npExact)
-<!-- [![Coverage Status](https://coveralls.io/repos/github/zauster/npExact/badge.svg?branch=master)](https://coveralls.io/github/zauster/npExact?branch=master) -->
 [![codecov](https://codecov.io/gh/zauster/npExact/branch/master/graph/badge.svg)](https://codecov.io/gh/zauster/npExact)
 
 Installation

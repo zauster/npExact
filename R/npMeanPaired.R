@@ -232,8 +232,6 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
 
         results <- mergeTwoResultSets(results, resultsGreater, resultsLess)
 
-        print(results)
-        
         ## if rejection in a two.sided setting, we inform the user of the
         ## side of rejection
         if(results[["rejection"]] == TRUE)
@@ -258,8 +256,6 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
                                       testFunction = McNemarTestRandom,
                                       x1 = x1, x2 = x2,
                                       p = 0.5, n = n)
-
-        print(results)
 
         theta <- results[["theta"]]
         if(alternative == "less" & !is.null(results[["d.alternative"]])) {
@@ -298,9 +294,12 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
               class = "nphtest")
 } ## end of npMeanPaired
 
-
-## performs the randomized McNemar test
-## x1, x2 are bounden real-valued vectors 
+## Performs the randomized McNemar test
+##
+## @param x1,x2 are bounden real-valued vectors
+## @param pseudoalpha level of alpha for each iteration
+## @param dots special paramenters to the function
+## @importFrom stats runif
 McNemarTestRandom <- function(x1, x2, pseudoalpha, dots)
 {
     ## b1, b2 are binary-valued vectors of equal length

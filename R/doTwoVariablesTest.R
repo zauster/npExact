@@ -1,4 +1,17 @@
-
+## Does a test for a two-variable test
+##
+## Does a test for a two-variable test, i.e. npMeanPaired,
+## npStochinUnpaired, etc.
+## @param alpha alpha
+## @param epsilon epsilon
+## @param theta theta
+## @param typeII typeII
+## @param d.alternative d.alternative
+## @param iterations iterations
+## @param max.iterations maximum iterations
+## @param testfunction the test function
+## @param x1,x2 values to be tested 
+## @importFrom stats optimize
 doTwoVariablesTest <- function(alpha, epsilon,
                                theta = NULL, typeII = NULL,
                                d.alternative = NULL,
@@ -6,6 +19,8 @@ doTwoVariablesTest <- function(alpha, epsilon,
                                testFunction, x1, x2, 
                                ...)
 {
+    ## dots: contains parameters/variables that are particular to the
+    ## testing function. they will be passed to the function 
     dots <- list(...)
     
     error <- 1
@@ -30,8 +45,6 @@ doTwoVariablesTest <- function(alpha, epsilon,
         }
         else {
 
-            ## print("here")
-
             ## npMeanUnpaired
             res <- try({
                 optimaltypeII <- optimize(npMeanUnpairedminTypeIIErrorWrapper,
@@ -46,8 +59,6 @@ doTwoVariablesTest <- function(alpha, epsilon,
                                        alpha - epsilon)
                 
                 d.alternative <- optimaltypeII$minimum
-                ## print("here")
-                ## print(theta)
                 if(round(theta$theta, digits = 4) >= 1L | round(theta$typeII >= 1L)) {
                     stop("No valid theta found")
                 }
