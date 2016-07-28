@@ -1,6 +1,6 @@
 
 
-context("npMeanPaired")
+context("Testing npMeanPaired")
 
 ones <- rep(1, 20)
 zeros <- rep(0, 20)
@@ -71,3 +71,23 @@ test_that("npMeanPaired, no theta calculation, greater",
 res <- npMeanPaired(x1, x2, alternative = "less")
 test_that("npMeanPaired, no theta calculation, less",
           expect_true(is.null(res$theta)))
+
+
+
+
+##
+## complain (or not) about NA
+## 
+mostly.ones <- data.frame(ones = c(rep(1, 15), rep(0, 8)))
+mostly.zeros <- data.frame(zeros = c(rep(0, 14), rep(1, 9)))
+mostly.zeros[["zeros"]][4] <- NA
+
+test_that("warning about NA",
+          expect_warning(npMeanPaired(mostly.zeros, mostly.ones)))
+
+res <- npMeanPaired(mostly.ones, mostly.zeros)
+test_that("positive d.alt",
+          expect_equal(res$d.alternative, 0.569, tolerance = 0.01))
+res <- npMeanPaired(mostly.zeros, mostly.ones)
+test_that("negative d.alt",
+          expect_equal(res$d.alternative, -0.569, tolerance = 0.01))

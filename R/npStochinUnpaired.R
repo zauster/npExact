@@ -313,9 +313,7 @@ sampleBinomTest <- function(x1, x2, pseudoalpha, dots)
                                         #times elements of c1=c2
             s1 <- s1 + sum(q < (d/(1 + d)))
         }
-        else
-        {
-            if(d < 0)
+        else if(d < 0)
             {
                 q <- runif(sum(c1 == c2))  #vector with draws from
                                         #uniform distribution of
@@ -323,7 +321,6 @@ sampleBinomTest <- function(x1, x2, pseudoalpha, dots)
                                         #elements of c1=c2
                 s1 <- s1 + sum(q < (-1) * (d/(1 - d))) ## right?
             }
-        }
     }
     
     prob <- sum(dbinom(s2:(s1 + s2), (s1 + s2), p)) ## or

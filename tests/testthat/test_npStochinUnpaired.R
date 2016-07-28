@@ -1,5 +1,5 @@
 
-context("npStochinUnpaired")
+context("Testing npStochinUnpaired")
 
 ones <- rep(1, 20)
 zeros <- rep(0, 20)
@@ -194,6 +194,18 @@ res <- npStochinUnpaired(mostly.zeros, mostly.ones)
 test_that("positive d.alt",
           expect_equal(res$d.alternative, 0.561, tolerance = .001))
 
+res <- npStochinUnpaired(mostly.ones, mostly.zeros, d = 0.1)
+test_that("positive d.alt",
+          expect_equal(res$d.alternative, 0.644, tolerance = .001))
+res <- npStochinUnpaired(mostly.ones, mostly.zeros, d = -0.1)
+test_that("positive d.alt",
+          expect_equal(res$d.alternative, 0.473, tolerance = .001))
+
+
+
+##
+## complain (or not) about NA
+## 
 mostly.zeros[["zeros"]][4] <- NA
 test_that("complain about NA",
           expect_error(npStochinUnpaired(mostly.zeros, mostly.ones)))
