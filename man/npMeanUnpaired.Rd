@@ -98,9 +98,6 @@ data(bargaining)
 npMeanUnpaired(bargaining$US, bargaining$IS, lower = 0, upper = 10, ignoreNA = TRUE)
 
 }
-\author{
-Karl Schlag, Christian Pechhacker, Peter Saffert and Oliver Reiter
-}
 \references{
 Karl Schlag (2008), A New Method for Constructing Exact Tests
 without Making any Assumptions. Available at
@@ -109,8 +106,10 @@ without Making any Assumptions. Available at
 \seealso{
 \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
 }
+\author{
+Karl Schlag, Christian Pechhacker, Peter Saffert and Oliver Reiter
+}
 \keyword{data}
 \keyword{mean}
 \keyword{test}
 \keyword{unpaired}
-

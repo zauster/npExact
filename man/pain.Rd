@@ -18,4 +18,3 @@ of the rotator cuff. The American journal of sports medicine, 33(9),
 1365-1368.
 }
 \keyword{datasets}
-

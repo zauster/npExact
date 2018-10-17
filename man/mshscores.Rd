@@ -19,4 +19,3 @@ Djankov, S., La Porta, R., Lopez-de-Silanes, F., & Shleifer, A.
 economics, 88(3), 430-465.
 }
 \keyword{datasets}
-

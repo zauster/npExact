@@ -18,4 +18,3 @@ Roth, A. E., Prasnikar, V., Okuno-Fujiwara, M., & Zamir, S.
 and Tokyo: An experimental study. The American Economic Review, 1068-1095.
 }
 \keyword{datasets}
-

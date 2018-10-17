@@ -6,8 +6,8 @@
 matched pairs.}
 \usage{
 npMeanPaired(x1, x2, lower = 0, upper = 1, alpha = 0.05,
-  alternative = "two.sided", epsilon = 1 * 10^(-6), iterations = 5000,
-  max.iterations = 100000)
+  alternative = "two.sided", epsilon = 1 * 10^(-6),
+  iterations = 5000, max.iterations = 100000)
 }
 \arguments{
 \item{x1, x2}{the (non-empty) numerical data vectors which contain the
@@ -103,9 +103,6 @@ npMeanPaired(uncertainty$w1, uncertainty$w2, upper = 60) ## or
 with(uncertainty, npMeanPaired(w1, w2, upper = 60))
 
 }
-\author{
-Karl Schlag, Christian Pechhacker and Oliver Reiter
-}
 \references{
 Schlag, Karl H. 2008, A New Method for Constructing Exact Tests
 without Making any Assumptions, Department of Economics and Business
@@ -115,7 +112,9 @@ Working Paper 1109, Universitat Pompeu Fabra. Available at
 \seealso{
 \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
 }
+\author{
+Karl Schlag, Christian Pechhacker and Oliver Reiter
+}
 \keyword{mean}
 \keyword{pairwise}
 \keyword{test}
-

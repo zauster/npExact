@@ -2,8 +2,8 @@
 % Please edit documentation in R/npExact-package.R
 \docType{package}
 \name{npExact-package}
-\alias{npExact}
 \alias{npExact-package}
+\alias{npExact}
 \title{Nonparametric hypothesis tests}
 \description{
 \code{npExact} provides distribution-free hypothesis tests.
@@ -60,10 +60,6 @@ scores <- as.vector(as.matrix(mshscores))
 npVarianceSingle(scores, lower = 0, upper = 1, v = 0.05, ignoreNA = TRUE)
 
 }
-\author{
-Karl Schlag, Oliver Reiter, Peter Saffert, Christian Pechhacker,
-Simona Jokubauskaite, Tautvilas Janusauskas
-}
 \references{
 Karl Schlag, A New Method for Constructing Exact Tests without
 Making any Assumptions (August, 2008) Department of Economics and Business
@@ -74,4 +70,7 @@ Working Paper 1109, Universitat Pompeu Fabra
 
 \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
 }
-
+\author{
+Karl Schlag, Oliver Reiter, Peter Saffert, Christian Pechhacker,
+Simona Jokubauskaite, Tautvilas Janusauskas
+}

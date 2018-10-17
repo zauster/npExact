@@ -87,9 +87,6 @@ y <- french[, 2]
 npStochinUnpaired(x, y, ignoreNA = TRUE)
 
 }
-\author{
-Karl Schlag, Peter Saffert and Oliver Reiter
-}
 \references{
 Schlag, Karl H. 2008, A New Method for Constructing Exact Tests
 without Making any Assumptions, Department of Economics and Business
@@ -99,8 +96,10 @@ Working Paper 1109, Universitat Pompeu Fabra. Available at
 \seealso{
 \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
 }
+\author{
+Karl Schlag, Peter Saffert and Oliver Reiter
+}
 \keyword{data}
 \keyword{inequality}
 \keyword{stochastic}
 \keyword{unpaired}
-

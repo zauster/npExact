@@ -5,9 +5,9 @@
 \title{A test for the variance of a bounded random variable based on a single
 sample of iid observations.}
 \usage{
-npVarianceSingle(x, v, lower = 0, upper = 1, alternative = "two.sided",
-  alpha = 0.05, iterations = 5000, epsilon = 1 * 10^(-6),
-  ignoreNA = FALSE, max.iterations = 100000)
+npVarianceSingle(x, v, lower = 0, upper = 1,
+  alternative = "two.sided", alpha = 0.05, iterations = 5000,
+  epsilon = 1 * 10^(-6), ignoreNA = FALSE, max.iterations = 100000)
 }
 \arguments{
 \item{x}{a (non-empty) numeric vector of data values.}
@@ -83,9 +83,6 @@ scores <- as.vector(as.matrix(mshscores))
 npVarianceSingle(scores, lower = 0, upper = 1, v = 0.05, ignoreNA = TRUE)
 
 }
-\author{
-Karl Schlag and Oliver Reiter
-}
 \references{
 Karl Schlag (2008).  Exact tests for correlation and for the
 slope in simple linear regressions without making assumptions. Available at
@@ -94,8 +91,10 @@ slope in simple linear regressions without making assumptions. Available at
 \seealso{
 \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
 }
+\author{
+Karl Schlag and Oliver Reiter
+}
 \keyword{sample}
 \keyword{single}
 \keyword{test}
 \keyword{variance}
-

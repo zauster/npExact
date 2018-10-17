@@ -21,4 +21,3 @@ Signal: an Experiment. Journal of Economic Behavior and Organization,
 Forthcoming
 }
 \keyword{datasets}
-
