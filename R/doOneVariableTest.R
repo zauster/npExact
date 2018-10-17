@@ -15,7 +15,7 @@ doOneVariableTest <- function(alpha, epsilon,
 {
     testFunction <- match.fun(testFunction)
     dots <- list(...)
-   
+
     error <- 1
     rejMatrix <- vector(mode = "numeric", length = 0)
 
@@ -27,7 +27,7 @@ doOneVariableTest <- function(alpha, epsilon,
                                            alpha = alpha - epsilon),
                   silent = TRUE)
     if(inherits(tryRes, "try-error")) {
-        
+
         ## pick up an error in the theta calculation
         ## and return a non-rejection
 
@@ -39,7 +39,7 @@ doOneVariableTest <- function(alpha, epsilon,
                         typeIIerror = NULL,
                         iterations.taken = 1000,
                         pseudoalpha = NULL)
-        
+
     } else {
 
         theta <- minTypeIIError(optimaltypeII[[1]],
@@ -55,7 +55,7 @@ doOneVariableTest <- function(alpha, epsilon,
             rej <- mean(rejMatrix)
             error <- exp(-2 * length(rejMatrix) * (rej - theta$theta)^2)
         }
-        
+
         results <- list(probrej = rej,
                         rejection = ifelse(rej >= theta$theta, TRUE, FALSE),
                         alpha = alpha,
@@ -63,7 +63,7 @@ doOneVariableTest <- function(alpha, epsilon,
                         d.alternative = optimaltypeII$root,
                         typeIIerror = theta$typeII,
                         mc.error = error,
-                        iterations.taken = length(rejMatrix), 
+                        iterations.taken = length(rejMatrix),
                         pseudoalpha = pseudoalpha)
 
     }

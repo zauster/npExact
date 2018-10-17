@@ -10,33 +10,33 @@
 ## @param iterations iterations
 ## @param max.iterations maximum iterations
 ## @param testfunction the test function
-## @param x1,x2 values to be tested 
+## @param x1,x2 values to be tested
 ## @importFrom stats optimize
 doTwoVariablesTest <- function(alpha, epsilon,
                                theta = NULL, typeII = NULL,
                                d.alternative = NULL,
                                iterations, max.iterations,
-                               testFunction, x1, x2, 
+                               testFunction, x1, x2,
                                ...)
 {
     ## dots: contains parameters/variables that are particular to the
-    ## testing function. they will be passed to the function 
+    ## testing function. they will be passed to the function
     dots <- list(...)
-    
+
     error <- 1
     rejMatrix <- vector(mode = "numeric", length = 0)
 
     results <- NULL
     if(is.null(theta)) {
         if(deparse(substitute(testFunction)) != "randomTest") {
-            
+
             ## npStochinUnpaired and npMeanPaired
             res <- try({
                 optimaltypeII <- uniroot(minTypeIIErrorWrapper,
                                          c(0, 1), p = dots[["p"]],
                                          N = dots[["n"]],
                                          alpha = alpha - epsilon)
-                
+
                 theta <- minTypeIIError(optimaltypeII[[1]],
                                         p = dots[["p"]], N = dots[["n"]],
                                         alpha = alpha - epsilon)
@@ -57,14 +57,14 @@ doTwoVariablesTest <- function(alpha, epsilon,
                                        dots[["n2"]],
                                        optimaltypeII$minimum,
                                        alpha - epsilon)
-                
+
                 d.alternative <- optimaltypeII$minimum
                 if(round(theta$theta, digits = 4) >= 1L | round(theta$typeII >= 1L)) {
                     stop("No valid theta found")
                 }
             }, silent = TRUE)
         }
-        
+
         ## pick up an error in the theta calculation
         if(inherits(res, "try-error")) {
             results <- list(probrej = 0,
@@ -75,7 +75,7 @@ doTwoVariablesTest <- function(alpha, epsilon,
                             typeIIerror = NULL,
                             iterations.taken = 1000,
                             pseudoalpha = NULL)
-            
+
         } else { ## if everything worked out, can compute theta
             typeII <- theta$typeII
             theta <- theta$theta
@@ -96,7 +96,7 @@ doTwoVariablesTest <- function(alpha, epsilon,
             rej <- mean(rejMatrix)
             error <- exp(-2 * length(rejMatrix) * (rej - theta)^2)
         }
-        
+
         results <- list(probrej = rej,
                         rejection = ifelse(rej >= theta, TRUE, FALSE),
                         alpha = alpha,
@@ -104,10 +104,10 @@ doTwoVariablesTest <- function(alpha, epsilon,
                         d.alternative = d.alternative,
                         typeIIerror = typeII,
                         mc.error = error,
-                        iterations.taken = length(rejMatrix), 
+                        iterations.taken = length(rejMatrix),
                         pseudoalpha = pseudoalpha)
     }
 
     return(results)
-    
+
 }

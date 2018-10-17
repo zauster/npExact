@@ -1,4 +1,3 @@
-
 context("npVarianceSingle")
 
 set.seed(123)

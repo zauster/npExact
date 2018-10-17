@@ -1,4 +1,3 @@
-
 ###--------------------------------------------------
 ### Functions to derive the optimal theta
 ###--------------------------------------------------
@@ -87,7 +86,7 @@ minTypeIIError <- function(p.alt, p, N, alpha, alternative)
         f <- function(x) {
             (1 - g2(p.alt, N, p, alpha*x))/(1 - x)
         }
-        
+
         ## calculate the type II errors for the thetas
         typeIIerrors <- sapply(theta[2,], f)
 
@@ -102,7 +101,7 @@ minTypeIIError <- function(p.alt, p, N, alpha, alternative)
         righttheta <- theta[2, which(typeIIerrors == mintypeII)]
         righttheta <- ifelse(length(righttheta) == 0, NA, righttheta)
     } else {
-        stop(noValidTheta)        
+        stop(noValidTheta)
     }
 
     list(theta = righttheta,

@@ -38,7 +38,7 @@ print.nphtest <- function(x, digits = 4, prefix = "", ...)
 
             cat("\nNote:\n")
             cat("The sample is so small that the null hypothesis will not be rejected for any values in the sample (and theta cannot be calculated).\n")
-            
+
             if(!is.null(x$estimate)) {
                 cat("\nsample estimates:\n")
                 print(x$estimate, ...)
@@ -77,7 +77,7 @@ print.nphtest <- function(x, digits = 4, prefix = "", ...)
 
         if(!is.null(x$mc.error))
             cat("\n   max error prob of MC:", round(x$mc.error, digits = digits))
-        
+
         if(!is.null(x$estimate)) {
             cat("\n\nsample estimates:\n")
             print(x$estimate, ...)

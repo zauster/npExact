@@ -1,18 +1,18 @@
 ##' A test for the mean difference between two bounded random variables given
 ##' matched pairs.
-##' 
+##'
 ##' This test requires that the user knows bounds before gathering the data
 ##' such that the properties of the data generating process imply that all
 ##' observations will be within these bounds. The data input consists of pairs
 ##' of observations, each pair consisting of an observation of each random
 ##' variable, different pairs being independently generated. No further
 ##' distributional assumptions are made.
-##' 
+##'
 ##' Under alternative = "greater", it is a test of the null hypothesis
 ##' \eqn{H_0: E(x_1) \le E(x_2)} against the alternative hypothesis \eqn{H_1:
 ##' E(x_1) > E(x_2)}.
-##' 
-##' 
+##'
+##'
 ##' This test uses the known bounds of the variables to transform the data into
 ##' [0, 1]. Then a random transformation is used to turn the data into
 ##' binary-valued variables. On this variables the exact McNemar Test with
@@ -25,14 +25,14 @@
 ##' iterations until the bound on the mistake involved by running these
 ##' iterations is below \code{epsilon}. This error epsilon is incorporated into
 ##' the overall level \code{alpha} in order to maintain that the test is exact.
-##' 
+##'
 ##' \code{theta} (and a value \code{mu} of the difference between the two means
 ##' in the set of the alternative hypothesis) is found in an optimization
 ##' procedure. \code{theta} and \code{mu} are chosen as to maximize the set of
 ##' data generating processes belonging to the alternative hypothesis that
 ##' yield type II error probability below 0.5. Please see the cited paper below
 ##' for further information.
-##' 
+##'
 ##' @param x1,x2 the (non-empty) numerical data vectors which contain the
 ##' variables to be tested. The first values of the vectors are assumed to be
 ##' the first matched pair of observations, the second values the second
@@ -51,7 +51,7 @@
 ##' cases where the difference between the threshold probability and theta is
 ##' small. Default: \code{10000}
 ##' @return A list with class "nphtest" containing the following components:
-##' 
+##'
 ##' \item{method}{ a character string indicating the name and type of the test
 ##' that was performed.  } \item{data.name}{ a character string giving the
 ##' name(s) of the data.  } \item{alternative}{ a character string describing
@@ -76,21 +76,21 @@
 ##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1109}.
 ##' @keywords pairwise mean test
 ##' @examples
-##' 
+##'
 ##' ## test whether pain after the surgery is less than before the surgery
 ##' data(pain)
 ##' npMeanPaired(pain$before, pain$after, lower = 0, upper = 100)
-##' 
+##'
 ##' ## when the computer was used in the surgery
 ##' before_pc <- pain[pain$pc == 1, "before"]
 ##' after_pc <- pain[pain$pc == 1, "after"]
 ##' npMeanPaired(before_pc, after_pc, lower = 0, upper = 100)
-##' 
+##'
 ##' ## test whether uncertainty decreased from the first to the second round
 ##' data(uncertainty)
 ##' npMeanPaired(uncertainty$w1, uncertainty$w2, upper = 60) ## or
 ##' with(uncertainty, npMeanPaired(w1, w2, upper = 60))
-##' 
+##'
 ##' @export npMeanPaired
 npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
                          alpha = 0.05,
@@ -130,7 +130,7 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
             x2 <- x2[, 1]
         }
     }
-    
+
     x1 <- as.vector(x1)
     x2 <- as.vector(x2)
 
@@ -202,7 +202,7 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
                                           p = 0.5, n = n)
 
 
-        ## "greater" rejects 
+        ## "greater" rejects
         if(resultsGreater[["rejection"]] == TRUE) {
             results <- resultsGreater
             theta <- resultsGreater[["theta"]]
@@ -225,7 +225,7 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
                 theta <- resultsLess[["theta"]]
                 results[["d.alternative"]] <- 1 - results[["d.alternative"]]
             } else {
-                results <- resultsGreater                
+                results <- resultsGreater
                 theta <- resultsGreater[["theta"]]
             }
         }
@@ -307,7 +307,7 @@ McNemarTestRandom <- function(x1, x2, pseudoalpha, dots)
     ##              (1, 1) and (0, 0) are dropped
 
     n <- dots[["n"]]
-    
+
     ## returns either 1 (rejection), p (prob of rejection) or 0 (no
     ## rejection)
 

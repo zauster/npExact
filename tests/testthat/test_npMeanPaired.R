@@ -1,5 +1,3 @@
-
-
 context("Testing npMeanPaired")
 
 ones <- rep(1, 20)
@@ -77,7 +75,7 @@ test_that("npMeanPaired, no theta calculation, less",
 
 ##
 ## complain (or not) about NA
-## 
+##
 mostly.ones <- data.frame(ones = c(rep(1, 15), rep(0, 8)))
 mostly.zeros <- data.frame(zeros = c(rep(0, 14), rep(1, 9)))
 mostly.zeros[["zeros"]][4] <- NA

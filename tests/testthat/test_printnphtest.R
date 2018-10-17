@@ -1,4 +1,3 @@
-
 context("Testing print.nphtest function")
 
 
@@ -21,13 +20,12 @@ test_that("test for Stochin estimate", {
                         "max error prob of MC:")
           })
 
-## 
+##
 ## TODO:
-## 
+##
 
 ## test for non-stochin parameter
 
 ## test for valid and invalid theta
 
 ## test for small-sample note
-

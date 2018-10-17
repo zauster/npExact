@@ -1,16 +1,16 @@
 ##' A test for comparing the means of two bounded random variables given two
 ##' independent samples
-##' 
+##'
 ##' This test requires that the user knows upper and lower bounds before
 ##' gathering the data such that the properties of the data generating process
 ##' imply that all observations will be within these bounds. The data input
 ##' consists of a sequence of independent observations for each random
 ##' variable, the two sequences being generated independently. No further
 ##' distributional assumptions are made.
-##' 
+##'
 ##' This is a test of the null hypothesis: \eqn{H_0: E(X_1) \le E(X_2)} against
 ##' \eqn{H_1: E(X_1) > E(X_2)}.
-##' 
+##'
 ##' This test uses the known bounds of the variables to transform the data into
 ##' [0, 1]. Then a random transformation is used to turn the data into
 ##' binary-valued variables. On this variables the exact Fischer-Tocher Test
@@ -24,11 +24,11 @@
 ##' these iterations is below \code{epsilon}. This error epsilon is
 ##' incorporated into the overall level \code{alpha} in order to maintain that
 ##' the test is exact.
-##' 
+##'
 ##' \code{theta} is found in an optimization procedure. \code{theta} is chosen
 ##' as to bring the type II error to 0.5. Please see the cited paper below for
 ##' further information.
-##' 
+##'
 ##' @param x1,x2 the (non-empty) numerical data vectors which contain the
 ##' variables to be tested.
 ##' @param lower,upper the theoretical lower and upper bounds on the data
@@ -47,7 +47,7 @@
 ##' cases where the difference between the threshold probability and theta is
 ##' small. Default: \code{10000}
 ##' @return A list with class "nphtest" containing the following components:
-##' 
+##'
 ##' \item{method}{ a character string indicating the name and type of the test
 ##' that was performed.  } \item{data.name}{ a character string giving the
 ##' name(s) of the data.  } \item{alternative}{ a character string describing
@@ -71,18 +71,18 @@
 ##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1109}.
 ##' @keywords unpaired data mean test
 ##' @examples
-##' 
+##'
 ##' ## test whether countries with french origin score lower than
 ##' ## countries with no french origin
 ##' data(french)
 ##' npMeanUnpaired(french[,1], french[,2], alternative = "less", ignoreNA =
 ##' TRUE)
-##' 
+##'
 ##' ## test whether American tend to be more generous than Isrealis
 ##' ## in a round of the Ultimatum game
 ##' data(bargaining)
 ##' npMeanUnpaired(bargaining$US, bargaining$IS, lower = 0, upper = 10, ignoreNA = TRUE)
-##' 
+##'
 ##' @export npMeanUnpaired
 npMeanUnpaired <- function(x1, x2,
                            lower = 0, upper = 1,
@@ -126,7 +126,7 @@ npMeanUnpaired <- function(x1, x2,
             x2 <- x2[, 1]
         }
     }
-        
+
     x1 <- as.vector(x1)
     x2 <- as.vector(x2)
 
@@ -201,7 +201,7 @@ npMeanUnpaired <- function(x1, x2,
                                           n1 = n1, n2 = n2)
 
 
-        ## "greater" rejects 
+        ## "greater" rejects
         if(resultsGreater[["rejection"]] == TRUE) {
             results <- resultsGreater
             theta <- resultsGreater[["theta"]]
@@ -222,13 +222,13 @@ npMeanUnpaired <- function(x1, x2,
                 results <- resultsLess
                 theta <- resultsLess[["theta"]]
             } else {
-                results <- resultsGreater                
+                results <- resultsGreater
                 theta <- resultsGreater[["theta"]]
             }
         }
 
         results <- mergeTwoResultSets(results, resultsGreater, resultsLess)
-        
+
         ## if rejection in a two.sided setting, we inform the user of the
         ## side of rejection
         if(results[["rejection"]] == TRUE)
@@ -258,7 +258,7 @@ npMeanUnpaired <- function(x1, x2,
         if(alternative == "less" & !is.null(results[["d.alternative"]])) {
             results[["d.alternative"]] <- 1 - results[["d.alternative"]]
         }
-        
+
     }
 
     if(!is.null(iterations) & results[["iterations.taken"]] < 1000)
@@ -298,7 +298,7 @@ randomTest <- function(x1, x2, pseudoalpha, dots)
 {
     n1 <- dots[["n1"]]
     n2 <- dots[["n2"]]
-    
+
     s1 <- sum(x1 >= runif(n1))
     s2 <- sum(x2 >= runif(n2))
     s3 <- s2 + s1

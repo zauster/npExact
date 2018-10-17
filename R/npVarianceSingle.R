@@ -1,21 +1,21 @@
 ##' A test for the variance of a bounded random variable based on a single
 ##' sample of iid observations.
-##' 
+##'
 ##' This test requires that the user knows upper and lower bounds before
 ##' gathering the data such that the properties of the data generating process
 ##' imply that all observations will be within these bounds. The data input
 ##' consists of a sequence of observations, each being an independent
 ##' realization of the random variable. No further distributional assumptions
 ##' are made.
-##' 
+##'
 ##' This is a test of the null hypothesis \eqn{H_0: Var(X) \le v} against
 ##' \eqn{H_1 : Var(X) > v}.
-##' 
+##'
 ##' This test randomly matches the data into pairs, then computes for each pair
 ##' the square of the difference and continues with the resulting sequence with
 ##' half as many observations as npMeanSingle. See the cited paper for more
 ##' information.
-##' 
+##'
 ##' @param x a (non-empty) numeric vector of data values.
 ##' @param v the value of the variance to be tested as \eqn{H_0: Var(x) \le v}.
 ##' @param lower,upper the theoretical lower and upper bounds on the data
@@ -34,7 +34,7 @@
 ##' cases where the difference between the threshold probability and theta is
 ##' small. Default: \code{10000}
 ##' @return A list with class "nphtest" containing the following components:
-##' 
+##'
 ##' \item{method}{ a character string indicating the name and type of the test
 ##' that was performed.  } \item{data.name}{ a character string giving the
 ##' name(s) of the data.  } \item{alternative}{ a character string describing
@@ -59,14 +59,14 @@
 ##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1097}.
 ##' @keywords variance test single sample
 ##' @examples
-##' 
+##'
 ##' ## see if the minority share holder shores have a variance greater
 ##' ## than 0.05
 ##' data(mshscores)
-##' 
+##'
 ##' scores <- as.vector(as.matrix(mshscores))
 ##' npVarianceSingle(scores, lower = 0, upper = 1, v = 0.05, ignoreNA = TRUE)
-##' 
+##'
 ##' @export npVarianceSingle
 npVarianceSingle <- function(x, v, lower = 0, upper = 1,
                              alternative = "two.sided",
@@ -81,7 +81,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
 
     null.value <- v
     names(null.value) <- "variance"
-    
+
     bounds <- paste("[", lower, ", ", upper, "]", sep = "")
 
 
@@ -163,7 +163,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
                                 p = p, n = m,
                                 x = x, alternative = "less")
 
-        ## if "greater" rejects 
+        ## if "greater" rejects
         if(resultsGreater[["rejection"]] == TRUE) {
             results <- resultsGreater
         }
@@ -184,7 +184,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
 
         results <- mergeTwoResultSets(results, resultsGreater, resultsLess,
                                       merge.d.alt = TRUE)
-        
+
     }
     else
     {
@@ -193,7 +193,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
         }
 
         ## cat("\np:", p, "\n")
-        
+
         results <- doOneVariableTest(alpha = alpha,
                                 epsilon = epsilon,
                                 iterations = iterations,
@@ -201,7 +201,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
                                 testFunction = sampleBinomTestnpVar,
                                 p = p, n = m,
                                 x = x, alternative = alternative)
-        
+
         results[["d.alternative"]] <- 1 - results[["d.alternative"]]
         theta <- results[["theta"]]
     }
@@ -235,7 +235,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
         }
     }
 
-    structure(list(method = method, 
+    structure(list(method = method,
                    data.name = DNAME,
                    alternative = alternative,
                    null.hypothesis = null.hypothesis,

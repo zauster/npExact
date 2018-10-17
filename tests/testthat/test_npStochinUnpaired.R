@@ -1,4 +1,3 @@
-
 context("Testing npStochinUnpaired")
 
 ones <- rep(1, 20)
@@ -24,7 +23,7 @@ test_that("theta unequal in both two.sided and greater",
 
 ##
 ## some more tests
-## 
+##
 set.seed(123)
 high <- rnorm(50) + 2
 low <- rnorm(50)
@@ -115,7 +114,7 @@ test_that("sample estimate 8",
 
 ##
 ## two-sided tests
-## 
+##
 
 ##
 ## high and low
@@ -182,7 +181,7 @@ test_that("npStochinUnpaired, no theta calculation, less",
 ## with duplicates in x1 and x2
 ## x1, x2 as data.frames
 ## alternative = two.sided: choose d.alt from "less" and "greater"-alternatives
-## 
+##
 mostly.ones <- data.frame(ones = c(rep(1, 15), rep(0, 8)))
 mostly.zeros <- data.frame(zeros = c(rep(0, 14), rep(1, 9)))
 
@@ -205,7 +204,7 @@ test_that("positive d.alt",
 
 ##
 ## complain (or not) about NA
-## 
+##
 mostly.zeros[["zeros"]][4] <- NA
 test_that("complain about NA",
           expect_error(npStochinUnpaired(mostly.zeros, mostly.ones)))

@@ -1,4 +1,3 @@
-
 context("npMeanSingle")
 
 ones <- rep(1, 20)
@@ -67,7 +66,7 @@ for(i in 1:5) {
 
 ##
 ## extreme case
-## 
+##
 w <- rep(0, 100)
 w[1] <- .5
 
@@ -132,7 +131,7 @@ probrejLess.before <- resLess$probrej
 for(mu in seq(0.1, 1, by = 0.1)) {
 
     ## print(mu)
-    
+
     resGreater <- npMeanSingle(w, mu = mu, upper = 5,
                                alternative = "greater", alpha = 0.025)
     resLess <- npMeanSingle(w, mu = mu, upper = 5,
@@ -146,7 +145,7 @@ for(mu in seq(0.1, 1, by = 0.1)) {
 
     probrejLess.before <- resLess$probrej
     probrejGreater.before <- resGreater$probrej
-    
+
 }
 
 set.seed(123)
@@ -169,7 +168,7 @@ test_that("D.alt < null value: extreme case",
 
 ##
 ## another example
-## 
+##
 x <- runif(45, max = 10)
 
 ## greater
@@ -220,7 +219,7 @@ test_that("npMeanSingle, no theta calculation. less",
 
 ##
 ## transBinomTest
-## 
+##
 lower <- 0
 upper <- 1
 x <- c(rep(0, 4), rep(.5, 13), rep(1, 20))

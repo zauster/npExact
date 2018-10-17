@@ -1,14 +1,14 @@
 ##' A test of a stochastic inequality given two independent samples
-##' 
+##'
 ##' The data input consists of a sequence of independent realizations
 ##' observations of each random variable, observations of the different
 ##' sequences also being independent.
-##' 
+##'
 ##' Given \eqn{-1 < d < 1} it is a test of the null hypothesis \eqn{H_0 : P(X_2
 ##' > X_1) \le P(X_2 < X_1) + d} against the alternative hypothesis \eqn{H_1 :
 ##' P(X_2 > X_1) > P(X_2 < X_1) + d}.
-##' 
-##' 
+##'
+##'
 ##' The data is randomly matched into pairs and then treats them as matched
 ##' pairs. The number of pairs is equal to the number of observations in the
 ##' smaller sequence. The exact randomized test is then used to determine if
@@ -18,12 +18,12 @@
 ##' rejection of the average rejection probability in these iterations lies
 ##' above \code{theta}. If the average rejection probability lies too close to
 ##' theta then the number of iterations is increased.
-##' 
+##'
 ##' \code{theta} is determined to maximize the set of differences
 ##' \eqn{P(X_2>X_1) - P(X_2<X_1)} belonging to the alternative hypothesis in
 ##' which the type II error probability lies below 0.5. For more details see
 ##' the paper.
-##' 
+##'
 ##' @param x1,x2 the (non-empty) numerical data vectors which contain the
 ##' variables to be tested.
 ##' @param d the maximal difference in probabilities assumed \eqn{H_0 : P(X_2 >
@@ -43,7 +43,7 @@
 ##' cases where the difference between the threshold probability and theta is
 ##' small. Default: \code{10000}
 ##' @return A list with class "nphtest" containing the following components:
-##' 
+##'
 ##' \item{method}{ a character string indicating the name and type of the test
 ##' that was performed.  } \item{data.name}{ a character string giving the
 ##' name(s) of the data.  } \item{alternative}{ a character string describing
@@ -68,12 +68,12 @@
 ##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1109}.
 ##' @keywords unpaired data stochastic inequality
 ##' @examples
-##' 
+##'
 ##' data(french)
 ##' x <- french[, 1]
 ##' y <- french[, 2]
 ##' npStochinUnpaired(x, y, ignoreNA = TRUE)
-##' 
+##'
 ##' @export npStochinUnpaired
 npStochinUnpaired <- function(x1, x2, d = 0,
                               alternative = "two.sided",
@@ -99,7 +99,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
             x2 <- x2[, 1]
         }
     }
-    
+
     x1 <- as.vector(x1)
     x2 <- as.vector(x2)
 
@@ -118,7 +118,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
 
     null.value <- d
     names(null.value) <- "relation P(x1 > x2) - P(x1 < x2)"
-    
+
     ## swap variable if alternative is "less"
     if(alternative == "less")
     {
@@ -156,7 +156,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
     }
 
     ## set name of estimate
-    names(sample.est) <- stochin.parameter 
+    names(sample.est) <- stochin.parameter
 
     ## null and alternative hypothesis
     null.hypothesis <- paste("SI",
@@ -168,7 +168,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
                             ifelse(alternative == "greater", " > ",
                             ifelse(alternative == "less", " < ", " != ")),
                             null.value, sep = "")
-    
+
     if(alternative == "two.sided")
     {
         ##
@@ -182,7 +182,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
                                              x1 = x2, x2 = x1,
                                              p = p, n = min.length,
                                              diff = d)
-        
+
         ##
         ## alternative = "less" at alpha / 2
         ##
@@ -202,7 +202,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
                                       diff = d)
 
 
-        ## "greater" rejects 
+        ## "greater" rejects
         if(resultsGreater[["rejection"]] == TRUE) {
             results <- resultsGreater
             theta <- resultsGreater[["theta"]]
@@ -223,19 +223,19 @@ npStochinUnpaired <- function(x1, x2, d = 0,
                 results <- resultsLess
                 theta <- resultsLess[["theta"]]
             } else {
-                results <- resultsGreater                
+                results <- resultsGreater
                 theta <- resultsGreater[["theta"]]
             }
         }
 
         results <- mergeTwoResultSets(results, resultsGreater, resultsLess)
-        
+
         if(results[["rejection"]] == TRUE) {
             alt.hypothesis <- paste("SI",
                                     ifelse(resultsGreater[["rejection"]] == TRUE, " > ", " < "),
                                     null.value, sep = "")
         }
-        
+
     }
     else
     {
@@ -297,7 +297,7 @@ sampleBinomTest <- function(x1, x2, pseudoalpha, dots)
     n <- dots[["n"]]
     p <- dots[["p"]]
     d <- dots[["diff"]]
-    
+
     c1 <- sample(x1, n)
     c2 <- sample(x2, n)
 
@@ -322,7 +322,7 @@ sampleBinomTest <- function(x1, x2, pseudoalpha, dots)
                 s1 <- s1 + sum(q < (-1) * (d/(1 - d))) ## right?
             }
     }
-    
+
     prob <- sum(dbinom(s2:(s1 + s2), (s1 + s2), p)) ## or
     ## prob <- 1 - pbinom(s2 - 1, s1 + s2, p) ## less exact than above?
 

@@ -1,4 +1,3 @@
-
 context("npMeanUnpaired")
 
 ones <- rep(1, 20)
