@@ -8,14 +8,12 @@ Authors@R: c(person(given = "Karl", family = "Schlag",
            email = "karl.schlag@univie.ac.at"), 
            person(given = "Oliver", family = "Reiter", 
                   role = c("cre", "ctb"),
-           email = "oliver.reiter@snapdragon.cc"),
+                  comment = c(ORCID = "0000-0001-6338-5428"),
+                  email = "oliver.reiter@snapdragon.cc"),
            person(given = "Peter", family = "Saffert", role = "ctb"),
-           person(given = "Christian", family = "Pechhacker",
-                  role = "ctb"),
-           person(given = "Simona", family = "Jokubauskaite",
-                  role = "ctb"),
-           person(given = "Tautvilas", family = "Janusauskas",
-                  role = "ctb"))
+           person(given = "Christian", family = "Pechhacker", role = "ctb"),
+           person(given = "Simona", family = "Jokubauskaite", role = "ctb"),
+           person(given = "Tautvilas", family = "Janusauskas", role = "ctb"))
 Description: This package contains several new hypothesis tests, which
     do not make assumptions on the underlying distributions.
 Depends:
