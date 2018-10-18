@@ -22,5 +22,7 @@ Imports:
     stats
 Suggests:
     testthat
+URL: https://github.com/zauster/npExact
+BugReports: https://github.com/zauster/npExact/issues
 License: GPL-2
 RoxygenNote: 6.1.0
