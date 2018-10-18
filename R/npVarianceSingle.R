@@ -73,8 +73,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
                              alpha = 0.05, iterations = 5000,
                              epsilon = 1 * 10^(-6),
                              ignoreNA = FALSE,
-                             max.iterations = 100000)
-{
+                             max.iterations = 100000) {
     method <- "Nonparametric Variance Test"
     DNAME <- deparse(substitute(x))
     x <- as.vector(x)
@@ -83,7 +82,6 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
     names(null.value) <- "variance"
 
     bounds <- paste("[", lower, ", ", upper, "]", sep = "")
-
 
     null.hypothesis <- paste("Var(", DNAME, ") ",
                              ifelse(alternative == "greater", "<= ",
@@ -103,12 +101,9 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
         }
     }
 
-    if(ignoreNA == TRUE)
-    {
+    if(ignoreNA == TRUE) {
         x <- x[!is.na(x)]
-    }
-    else if(any(is.na(x)) == TRUE)
-    {
+    } else if(any(is.na(x)) == TRUE) {
         stop("The data contains NA's!")
     }
 
@@ -138,46 +133,42 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
     rejMatrix <- vector(mode = "numeric", length = 0)
 
     ## deterministic test
-    if(alternative == "two.sided")
-    {
+    if(alternative == "two.sided") {
         ##
         ## alternative "greater"
         ##
         resultsGreater <- doOneVariableTest(alpha = alpha / 2,
-                                epsilon = epsilon,
-                                iterations = iterations,
-                                max.iterations = max.iterations,
-                                testFunction = sampleBinomTestnpVar,
-                                p = p, n = m,
-                                x = x, alternative = "greater")
+                                            epsilon = epsilon,
+                                            iterations = iterations,
+                                            max.iterations = max.iterations,
+                                            testFunction = sampleBinomTestnpVar,
+                                            p = p, n = m,
+                                            x = x, alternative = "greater")
 
         ##
         ## alternative "less"
         ##
         p <- 1 - p
         resultsLess <- doOneVariableTest(alpha = alpha / 2,
-                                epsilon = epsilon,
-                                iterations = iterations,
-                                max.iterations = max.iterations,
-                                testFunction = sampleBinomTestnpVar,
-                                p = p, n = m,
-                                x = x, alternative = "less")
+                                         epsilon = epsilon,
+                                         iterations = iterations,
+                                         max.iterations = max.iterations,
+                                         testFunction = sampleBinomTestnpVar,
+                                         p = p, n = m,
+                                         x = x, alternative = "less")
 
-        ## if "greater" rejects
         if(resultsGreater[["rejection"]] == TRUE) {
+            ## if "greater" rejects
             results <- resultsGreater
-        }
-        ## if "less" rejects
-        else if(resultsLess[["rejection"]] == TRUE) {
+        } else if(resultsLess[["rejection"]] == TRUE) {
+            ## if "less" rejects
             results <- resultsLess
-        }
-        ## if none rejects:
-        ## we take the one that is more likely to reject
-        else {
+        } else {
+            ## if none rejects:
+            ## we take the one that is more likely to reject
             if(sample.est < null.value) {
                 results <- resultsGreater
-            }
-            else {
+            } else {
                 results <- resultsLess
             }
         }
@@ -185,9 +176,7 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
         results <- mergeTwoResultSets(results, resultsGreater, resultsLess,
                                       merge.d.alt = TRUE)
 
-    }
-    else
-    {
+    } else {
         if(alternative == "less") {
             p <- 1 - p
         }
@@ -195,12 +184,12 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
         ## cat("\np:", p, "\n")
 
         results <- doOneVariableTest(alpha = alpha,
-                                epsilon = epsilon,
-                                iterations = iterations,
-                                max.iterations = max.iterations,
-                                testFunction = sampleBinomTestnpVar,
-                                p = p, n = m,
-                                x = x, alternative = alternative)
+                                     epsilon = epsilon,
+                                     iterations = iterations,
+                                     max.iterations = max.iterations,
+                                     testFunction = sampleBinomTestnpVar,
+                                     p = p, n = m,
+                                     x = x, alternative = alternative)
 
         results[["d.alternative"]] <- 1 - results[["d.alternative"]]
         theta <- results[["theta"]]
@@ -217,10 +206,8 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
 
     ## if rejection in a two.sided setting, we inform the user of the
     ## side of rejection
-    if(alternative == "two.sided")
-    {
-        if(results[["rejection"]] == TRUE)
-        {
+    if(alternative == "two.sided") {
+        if(results[["rejection"]] == TRUE) {
             alt.hypothesis <- paste("Var(", DNAME, ")",
                                     ifelse(resultsGreater[["rejection"]] == TRUE,
                                            " > ", " < "),
@@ -255,11 +242,10 @@ npVarianceSingle <- function(x, v, lower = 0, upper = 1,
                    null.value = null.value),
               class = "nphtest")
 }
-    ## p <- 2 * v / (upper - lower)^2  ## normalized threshold
+## p <- 2 * v / (upper - lower)^2  ## normalized threshold
 
 
-sampleBinomTestnpVar <- function(p, n, pseudoalpha, dots)
-{
+sampleBinomTestnpVar <- function(p, n, pseudoalpha, dots) {
     x <- sample(dots[["x"]])
 
     if(dots[["alternative"]] == "less") {
@@ -298,19 +284,13 @@ sampleBinomTestnpVar <- function(p, n, pseudoalpha, dots)
     ##                lower.tail = ifelse(alternative == "greater",
     ##                  TRUE, FALSE)) ## not exact
 
-    if(prob <= pseudoalpha) ## reject with probability 1
-    {
+    if(prob <= pseudoalpha) ## reject with probability 1 {
         res <- 1
-    }
-    else
-    {
+    } else {
         h <- dbinom(zeros, zeros + ones, p) ## more efficient
-        if (prob <= pseudoalpha + h) ##(reject with positive probability)
-        {
+        if (prob <= pseudoalpha + h) ##(reject with positive probability) {
             res <- ((pseudoalpha - prob + h) / h)
-        }
-        else
-        {
+        } else {
             res <- 0
         }
     }

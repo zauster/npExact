@@ -80,8 +80,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
                               iterations = 5000, alpha = 0.05,
                               epsilon = 1 * 10^(-6),
                               ignoreNA = FALSE,
-                              max.iterations = 100000)
-{
+                              max.iterations = 100000) {
     method <- "Nonparametric Test for Stochastic Inequality"
     names.x1 <- deparse(substitute(x1))
     names.x2 <- deparse(substitute(x2))
@@ -103,13 +102,10 @@ npStochinUnpaired <- function(x1, x2, d = 0,
     x1 <- as.vector(x1)
     x2 <- as.vector(x2)
 
-    if(ignoreNA == TRUE)
-    {
+    if(ignoreNA == TRUE) {
         x1 <- x1[!is.na(x1)]
         x2 <- x2[!is.na(x2)]
-    }
-    else if(any(is.na(c(x1, x2))) == TRUE)
-    {
+    } else if(any(is.na(c(x1, x2))) == TRUE) {
         stop("The data contains NA's!")
     }
 
@@ -120,8 +116,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
     names(null.value) <- "relation P(x1 > x2) - P(x1 < x2)"
 
     ## swap variable if alternative is "less"
-    if(alternative == "less")
-    {
+    if(alternative == "less") {
         names.x1.new <- names.x2
         names.x2 <- names.x1
         names.x1 <- names.x1.new
@@ -169,8 +164,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
                             ifelse(alternative == "less", " < ", " != ")),
                             null.value, sep = "")
 
-    if(alternative == "two.sided")
-    {
+    if(alternative == "two.sided") {
         ##
         ## alternative = "greater" at alpha / 2
         ##
@@ -201,25 +195,23 @@ npStochinUnpaired <- function(x1, x2, d = 0,
                                       p = p, n = min.length,
                                       diff = d)
 
-
-        ## "greater" rejects
         if(resultsGreater[["rejection"]] == TRUE) {
+            ## "greater" rejects
             results <- resultsGreater
             theta <- resultsGreater[["theta"]]
-        }
-        ## "less" rejects
-        else if(resultsLess[["rejection"]] == TRUE) {
+        } else if(resultsLess[["rejection"]] == TRUE) {
+            ## "less" rejects
             results <- resultsLess
             theta <- resultsLess[["theta"]]
-        }
-        ## none rejects:
-        ## we take the one that is more likely to reject
-        else {
-            if((sample.est < null.value) & !is.null(resultsGreater[["theta"]])) {
+        } else {
+            ## none rejects:
+            ## we take the one that is more likely to reject
+            if((sample.est < null.value) &
+               !is.null(resultsGreater[["theta"]])) {
                 results <- resultsGreater
                 theta <- resultsGreater[["theta"]]
-            }
-            else if((sample.est > null.value) & !is.null(resultsLess[["theta"]])) {
+            } else if((sample.est > null.value) &
+                      !is.null(resultsLess[["theta"]])) {
                 results <- resultsLess
                 theta <- resultsLess[["theta"]]
             } else {
@@ -235,10 +227,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
                                     ifelse(resultsGreater[["rejection"]] == TRUE, " > ", " < "),
                                     null.value, sep = "")
         }
-
-    }
-    else
-    {
+    } else {
         results <- doTwoVariablesTest(alpha = alpha,
                                       epsilon = epsilon,
                                       iterations = iterations,
@@ -260,7 +249,6 @@ npStochinUnpaired <- function(x1, x2, d = 0,
         warning(paste("The maximum number of iterations (",
                       format(max.iterations, scientific = FALSE),
                       ") was reached. Rejection may be very sensible to the choice of the parameters.", sep = ""))
-
 
     structure(list(method = method,
                    data.name = DNAME,
@@ -292,8 +280,7 @@ npStochinUnpaired <- function(x1, x2, d = 0,
 ## x1, x2 ... data vectors
 ## n ... the minimum length of the data vectors
 
-sampleBinomTest <- function(x1, x2, pseudoalpha, dots)
-{
+sampleBinomTest <- function(x1, x2, pseudoalpha, dots) {
     n <- dots[["n"]]
     p <- dots[["p"]]
     d <- dots[["diff"]]
@@ -304,17 +291,13 @@ sampleBinomTest <- function(x1, x2, pseudoalpha, dots)
     s1 <- sum(c1 > c2) #counts how often c1 > c2
     s2 <- sum(c1 < c2) #counts how often c1 < c2
 
-    if((s1 + s2) != n)
-    {
-        if(d > 0)
-        {
+    if((s1 + s2) != n) {
+        if(d > 0) {
             q <- runif(sum(c1 == c2)) #vector with draws from uniform
                                         #distribution of length=number of
                                         #times elements of c1=c2
             s1 <- s1 + sum(q < (d/(1 + d)))
-        }
-        else if(d < 0)
-            {
+        } else if(d < 0) {
                 q <- runif(sum(c1 == c2))  #vector with draws from
                                         #uniform distribution of
                                         #length=number of times
@@ -327,15 +310,11 @@ sampleBinomTest <- function(x1, x2, pseudoalpha, dots)
     ## prob <- 1 - pbinom(s2 - 1, s1 + s2, p) ## less exact than above?
 
     res <- 0
-    if(prob <= pseudoalpha)
-    {
+    if(prob <= pseudoalpha) {
         res <- 1
-    }
-    else
-    {
+    } else {
         h2 <- (p^s2) * ((1 - p)^s1) * choose(s1 + s2, s2)
-        if(prob <= (pseudoalpha + h2))
-        {
+        if(prob <= (pseudoalpha + h2)) {
             res <- ((pseudoalpha - prob + h2)/h2)
         }
     }

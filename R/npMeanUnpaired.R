@@ -91,8 +91,7 @@ npMeanUnpaired <- function(x1, x2,
                            alternative = "two.sided",
                            epsilon = 1 * 10^(-6),
                            ignoreNA = FALSE,
-                           max.iterations = 100000)
-{
+                           max.iterations = 100000) {
     method <- "Nonparametric Mean Test for unpaired variables"
 
     null.value <- 0
@@ -130,13 +129,10 @@ npMeanUnpaired <- function(x1, x2,
     x1 <- as.vector(x1)
     x2 <- as.vector(x2)
 
-    if(ignoreNA == TRUE)
-    {
+    if(ignoreNA == TRUE) {
         x1 <- x1[!is.na(x1)]
         x2 <- x2[!is.na(x2)]
-    }
-    else if(any(is.na(c(x1, x2))) == TRUE)
-    {
+    } else if(any(is.na(c(x1, x2))) == TRUE) {
         stop("The data contains NA's!")
     }
 
@@ -148,7 +144,6 @@ npMeanUnpaired <- function(x1, x2,
 
     if(alpha >= 1 | alpha <= 0)
         stop("Please supply a sensible value for alpha.")
-
 
     sample.est <- c(mean(x1), mean(x2))
     names(sample.est) <- c(paste("mean(", names.x1, ")", sep = ""),
@@ -170,8 +165,7 @@ npMeanUnpaired <- function(x1, x2,
     error <- 1
     rejMatrix <- vector(mode = "numeric", length = 0)
 
-    if(alternative == "two.sided")
-    {
+    if(alternative == "two.sided") {
         ##
         ## alternative "greater" at alpha / 2
         ##
@@ -199,7 +193,6 @@ npMeanUnpaired <- function(x1, x2,
                                           testFunction = randomTest,
                                           x1 = x1, x2 = x2,
                                           n1 = n1, n2 = n2)
-
 
         ## "greater" rejects
         if(resultsGreater[["rejection"]] == TRUE) {
@@ -231,17 +224,13 @@ npMeanUnpaired <- function(x1, x2,
 
         ## if rejection in a two.sided setting, we inform the user of the
         ## side of rejection
-        if(results[["rejection"]] == TRUE)
-        {
+        if(results[["rejection"]] == TRUE) {
             alt.hypothesis <- paste("E(", names.x1, ")",
                                     ifelse(resultsGreater[["rejection"]] == TRUE, " < ", " > "),
                                     "E(", names.x2, ")", sep = "")
         }
-    }
-    else
-    {
-        if(alternative == "greater")
-        {
+    } else {
+        if(alternative == "greater") {
             x1 <- 1 - x1
             x2 <- 1 - x2
         }
@@ -294,8 +283,7 @@ npMeanUnpaired <- function(x1, x2,
 } ## end of npMeanUnpaired
 
 
-randomTest <- function(x1, x2, pseudoalpha, dots)
-{
+randomTest <- function(x1, x2, pseudoalpha, dots) {
     n1 <- dots[["n1"]]
     n2 <- dots[["n2"]]
 
@@ -304,27 +292,19 @@ randomTest <- function(x1, x2, pseudoalpha, dots)
     s3 <- s2 + s1
     k <- max(0, s3 - n2):(s1 - 1)
     prob <- 0
-    if (s1 >= (1 + k[1]))
-    {
-        prob <- sum(choose(n1,
-                           k) * choose(n2,
-                                       s3 - k)/choose(n1 + n2,
-                                                      s3))
+    if (s1 >= (1 + k[1])) {
+        prob <- sum(choose(n1, k) * choose(n2, s3 - k)/choose(n1 + n2, s3))
         ## h.alt <- phyper(s1 - 1, n1, n2, A)
     }
 
     res <- 0
-    if (prob <= pseudoalpha)
-    {
+    if (prob <= pseudoalpha) {
         ## h2 <- prob + choose(n1, s1) * choose(n2, s3 - s1)/choose(n1 +
         ## n2, s3)
         h2 <- prob + dhyper(s1, n1, n2, s3)
-        if (h2 <= pseudoalpha)
-        {
+        if (h2 <= pseudoalpha) {
             res <- 1
-        }
-        else
-        {
+        } else {
             res <- ((pseudoalpha - prob)/(h2 - prob))
         }
     }
@@ -338,8 +318,7 @@ randomTest <- function(x1, x2, pseudoalpha, dots)
 
 
 ## calculates pvalue of Fisher's test
-pvalueFisher <- function(n1, n2, s1, s2)
-{
+pvalueFisher <- function(n1, n2, s1, s2) {
     ## if( s1 == -1 | s2 > n2)
     ##   return(0)
     ## else
@@ -366,7 +345,6 @@ pvalueFisher <- function(n1, n2, s1, s2)
 ##   ##       {
 ##   ##         t1 <- pvalueFisher(n1, n2, s1, s2)
 ##   ##         t2 <- pvalueFisher(n1, n2, s1 - 1, s2 + 1)
-
 ##   ##         if( t2 >= pseudoalpha)
 ##   ##           {
 ##   ##             ## in this case, pr = zero
@@ -404,12 +382,10 @@ pvalueFisher <- function(n1, n2, s1, s2)
 ## }
 
 maxTypeII <- function(y1, d, n1, n2, y2 = y1 + d,
-                      alpha = 0.05, theta = 0.2)
-{
+                      alpha = 0.05, theta = 0.2) {
     pseudoalpha <- theta * alpha
     res <- 0
-    f <- function(s1, n1, n2, y1, y2)
-    {
+    f <- function(s1, n1, n2, y1, y2) {
         t1 <- pvalueFisher(n1, n2, s1, 0:n2)
         t2 <- pvalueFisher(n1, n2, s1 - 1, 1:(n2 + 1))
         res <- sum(ifelse(t2 >= pseudoalpha, 0,
@@ -418,23 +394,20 @@ maxTypeII <- function(y1, d, n1, n2, y2 = y1 + d,
                           dbinom(s1, n1, y1) * dbinom(0:n2, n2, y2) * 1)))
         res
     }
-    res <- sum(sapply(0:n1,
-                      f, n1, n2, y1, y2))
+    res <- sum(sapply(0:n1, f, n1, n2, y1, y2))
     type2 <- (1 - res)/(1 - theta)
     return(min(type2, 1))
 }
 
 ## same as function typeII error, only order of inputs changed,
 ## so that function "optimize" can be used
-minTypeII <- function(theta, y1, y2, n1, n2, alpha)
-{
+minTypeII <- function(theta, y1, y2, n1, n2, alpha) {
     maxTypeII(y1, d = y2 - y1, n1, n2, y2,
               alpha = alpha, theta = theta)
 }
 
 ### calculate theta
-optimizeTheta <- function(n1, n2, diff, alpha = alpha)
-{
+optimizeTheta <- function(n1, n2, diff, alpha = alpha) {
     ## STEP 1)  maximize typeII error over y1, y2
     ## cat("\nmax ")
     maxexpect <- optimize(maxTypeII, c(0, 1 - diff),
@@ -463,8 +436,7 @@ optimizeTheta <- function(n1, n2, diff, alpha = alpha)
 }
 
 npMeanUnpairedminTypeIIErrorWrapper <- function(d, n1, n2, alpha,
-                                                typeIIgoal = 0.5)
-{
+                                                typeIIgoal = 0.5) {
     (optimizeTheta(n1, n2, d, alpha)$typeII - typeIIgoal)^2
 }
 

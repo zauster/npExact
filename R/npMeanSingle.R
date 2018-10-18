@@ -1,17 +1,17 @@
 ##' A test for the mean of a bounded random variable based on a single sample
 ##' of iid observations.
-##' 
+##'
 ##' This test requires that the user knows upper and lower bounds before
 ##' gathering the data such that the properties of the data generating process
 ##' imply that all observations will be within these bounds. The data input
 ##' consists of a sequence of observations, each being an independent
 ##' realization of the random variable. No further distributional assumptions
 ##' are made.
-##' 
+##'
 ##' For any \eqn{\mu} that lies between the two bounds, under alternative =
 ##' "greater", it is a test of the null hypothesis \eqn{H_0 : E(X) \le \mu}
 ##' against the alternative hypothesis \eqn{H_1 : E(X) > \mu}.
-##' 
+##'
 ##' Using the known bounds, the data is transformed to lie in [0, 1] using an
 ##' affine transformation. Then the data is randomly transformed into a new
 ##' data set that has values 0, \code{mu} and 1 using a mean preserving
@@ -26,7 +26,7 @@
 ##' the set of parameters in the alternative hypothesis under which the type II
 ##' error probability is below 0.5. Please see the cited paper below for
 ##' further information.
-##' 
+##'
 ##' @param x a (non-empty) numeric vector of data values.
 ##' @param mu threshold value for the null hypothesis.
 ##' @param lower,upper the theoretical lower and upper bounds on the data
@@ -45,7 +45,7 @@
 ##' cases where the difference between the threshold probability and theta is
 ##' small. Default: \code{10000}
 ##' @return A list with class "nphtest" containing the following components:
-##' 
+##'
 ##' \item{method}{ a character string indicating the name and type of the test
 ##' that was performed.  } \item{data.name}{ a character string giving the
 ##' name(s) of the data.  } \item{alternative}{ a character string describing
@@ -71,14 +71,14 @@
 ##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1109}.
 ##' @keywords single sample mean test
 ##' @examples
-##' 
+##'
 ##' ## test whether Americans gave more than 5 dollars in a round of
 ##' ## the Ultimatum game
 ##' data(bargaining)
 ##' us_offers <- bargaining$US
 ##' npMeanSingle(us_offers, mu = 5, lower = 0, upper = 10, alternative =
 ##' "greater", ignoreNA = TRUE) ## no rejection
-##' 
+##'
 ##' ## test if the decrease in pain before and after the surgery is smaller
 ##' ## than 50
 ##' data(pain)
@@ -86,7 +86,7 @@
 ##' without_pc <- pain[pain$pc == 0, "decrease"]
 ##' npMeanSingle(without_pc, mu = 50, lower = 0, upper = 100,
 ##' alternative = "less")
-##' 
+##'
 ##' @export npMeanSingle
 npMeanSingle <- function(x, mu,
                          lower = 0, upper = 1,
@@ -94,8 +94,7 @@ npMeanSingle <- function(x, mu,
                          iterations = 5000, alpha = 0.05,
                          epsilon = 1 * 10^(-6),
                          ignoreNA = FALSE,
-                         max.iterations = 100000)
-{
+                         max.iterations = 100000) {
     method <- "Nonparametric Single Mean Test"
     DNAME <- deparse(substitute(x))
 
@@ -112,7 +111,7 @@ npMeanSingle <- function(x, mu,
 
     null.value <- mu
     names(null.value) <- "mean"
-    
+
     null.hypothesis <- paste("E(", DNAME, ") ",
                              ifelse(alternative == "greater", "<= ",
                              ifelse(alternative == "less", ">= ",
@@ -127,12 +126,9 @@ npMeanSingle <- function(x, mu,
     bounds <- paste("[", round(lower, digits = 3), ", ",
                     round(upper, digits = 3), "]", sep = "")
 
-    if(ignoreNA == TRUE)
-    {
+    if(ignoreNA == TRUE) {
         x <- x[!is.na(x)]
-    }
-    else if(any(is.na(x)) == TRUE)
-    {
+    } else if(any(is.na(x)) == TRUE) {
         stop("The data contains NA's!")
     }
 
@@ -160,56 +156,52 @@ npMeanSingle <- function(x, mu,
     n <- length(x)
     xp <- x - p
 
-    if(alternative == "two.sided")
-    {
+    if(alternative == "two.sided") {
         ##
         ## first the upper side, alternative = "greater"
         ##
         resultsGreater <- doOneVariableTest(alpha = alpha / 2,
-                                           epsilon = epsilon,
-                                           iterations = iterations,
-                                           max.iterations = max.iterations,
-                                           testFunction = transBinomTest,
-                                           p = p, n = n,
-                                           x = x, xp = xp)
-        
+                                            epsilon = epsilon,
+                                            iterations = iterations,
+                                            max.iterations = max.iterations,
+                                            testFunction = transBinomTest,
+                                            p = p, n = n,
+                                            x = x, xp = xp)
+
         ##
         ## secondly the lower side, alternative = "less"
         ##
         x <- 1 - x
         p <- 1 - p
         xp <- x - p
-        
-        resultsLess <- doOneVariableTest(alpha = alpha / 2,
-                                        epsilon = epsilon,
-                                        iterations = iterations,
-                                        max.iterations = max.iterations,
-                                        testFunction = transBinomTest,
-                                        p = p, n = n,
-                                        x = x, xp = xp)
 
-        ## "greater" rejects 
+        resultsLess <- doOneVariableTest(alpha = alpha / 2,
+                                         epsilon = epsilon,
+                                         iterations = iterations,
+                                         max.iterations = max.iterations,
+                                         testFunction = transBinomTest,
+                                         p = p, n = n,
+                                         x = x, xp = xp)
+
         if(resultsGreater[["rejection"]] == TRUE) {
+            ## "greater" rejects
             results <- resultsGreater
             theta <- resultsGreater[["theta"]]
-        }
-        ## "less" rejects
-        else if(resultsLess[["rejection"]] == TRUE) {
+        } else if(resultsLess[["rejection"]] == TRUE) {
+            ## "less" rejects
             results <- resultsLess
             theta <- resultsLess[["theta"]]
-        }
-        ## none rejects:
-        ## we take the one that is more likely to reject
-        else {
+        } else {
+            ## none rejects:
+            ## we take the one that is more likely to reject
             if((sample.est < null.value) & !is.null(resultsGreater[["theta"]])) {
                 results <- resultsGreater
                 theta <- resultsGreater[["theta"]]
-            }
-            else if((sample.est > null.value) & !is.null(resultsLess[["theta"]])) {
+            } else if((sample.est > null.value) & !is.null(resultsLess[["theta"]])) {
                 results <- resultsLess
                 theta <- resultsLess[["theta"]]
             } else {
-                results <- resultsGreater                
+                results <- resultsGreater
                 theta <- resultsGreater[["theta"]]
             }
         }
@@ -219,32 +211,28 @@ npMeanSingle <- function(x, mu,
 
         ## if rejection in a two.sided setting, we inform the user of the
         ## side of rejection
-        if(results[["rejection"]] == TRUE)
-        {
+        if(results[["rejection"]] == TRUE) {
             alt.hypothesis <- paste("E(", DNAME, ")",
                                     ifelse(resultsGreater[["rejection"]] == TRUE,
                                            " > ", " < "),
                                     mu, sep = "")
         }
-
-    }
-    else ## alternative == "greater" => default
-    {
-        if(alternative == "less")
-        {
+    } else {
+        ## alternative == "greater" => default
+        if(alternative == "less") {
             x <- 1 - x
             p <- 1 - p
             xp <- x - p
         }
 
         results <- doOneVariableTest(alpha = alpha,
-                                    epsilon = epsilon,
-                                    iterations = iterations,
-                                    max.iterations = max.iterations,
-                                    testFunction = transBinomTest,
-                                    p = p, n = n,
-                                    x = x, xp = xp)
-                                    
+                                     epsilon = epsilon,
+                                     iterations = iterations,
+                                     max.iterations = max.iterations,
+                                     testFunction = transBinomTest,
+                                     p = p, n = n,
+                                     x = x, xp = xp)
+
         if(alternative == "less" & !is.null(results[["d.alternative"]])) {
             results[["d.alternative"]] <- 1 - results[["d.alternative"]]
         }
@@ -291,14 +279,13 @@ npMeanSingle <- function(x, mu,
 ## n ... length of x
 ## pseudoalpha ... theta times alpha, the (new) level of the test
 
-transBinomTest <- function(p, n, pseudoalpha, dots)
-{
+transBinomTest <- function(p, n, pseudoalpha, dots) {
     x <- dots[["x"]]
     xp <- dots[["xp"]]
 
     ## str(x)
     ## str(xp)
-    
+
     q <- runif(n)
     zeros <- sum(x < (q * p))  ## counts how often values of x < q*p
     ones <- sum(xp > (q * (1 - p))) ## counts how often xp > q*(1-p)
@@ -307,17 +294,13 @@ transBinomTest <- function(p, n, pseudoalpha, dots)
     res.binomtest <- 1 - pbinom(ones - 1, ones + zeros, p)
 
     res <- 0
-    if (res.binomtest <= pseudoalpha)
-    {
+    if (res.binomtest <= pseudoalpha) {
         res <- 1
-    }
-    else
-    {
+    } else {
         h2 <- dbinom(ones, zeros + ones, p)
-        if (res.binomtest <= (pseudoalpha + h2))
-        {
+        if (res.binomtest <= (pseudoalpha + h2)) {
             res <- ((pseudoalpha - res.binomtest + h2)/h2)
         }
     }
-    res
+    return(res)
 }

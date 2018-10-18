@@ -1,12 +1,10 @@
-print.nphtest <- function(x, digits = 4, prefix = "", ...)
-{
+print.nphtest <- function(x, digits = 4, prefix = "", ...) {
     cat("\n")
     cat(strwrap(x$method, prefix = "\t"), sep="\n")
     cat("\n")
     cat("data:", x$data.name, "\n")
 
-    if(!is.null(x$alternative) && !is.null(x$null.hypothesis) && !is.null(x$alt.hypothesis))
-    {
+    if(!is.null(x$alternative) && !is.null(x$null.hypothesis) && !is.null(x$alt.hypothesis)) {
         ## stochin extra
         if(!is.null(x$stochin.parameter)) {
             cat("parameter: SI =", x$stochin.parameter, "\n")
@@ -47,18 +45,16 @@ print.nphtest <- function(x, digits = 4, prefix = "", ...)
       }
 
     if(!is.null(x$theta)) {
-        if(!is.null(x$p.value))
-        {
+        if(!is.null(x$p.value)) {
             fp <- format.pval(x$p.value, digits = digits)
             fp <- paste("p-value",
                         if(substr(fp, 1L, 1L) == "<") fp
-                        else paste("=",fp))
+                        else paste("=", fp))
             cat(fp, "\n")
         }
 
         cat("\ngiven parameters:\n")
-        if(!is.null(x$bounds))
-        {
+        if(!is.null(x$bounds)) {
             cat(paste("   ", x$data.name,
                       " in ", x$bounds,
                       "\n", sep = ""))
@@ -66,8 +62,7 @@ print.nphtest <- function(x, digits = 4, prefix = "", ...)
         cat("   alpha:", x$alpha)
         cat("\n   theta:", x$thetaValue)
 
-        if(!is.null(x$d.alternative))
-        {
+        if(!is.null(x$d.alternative)) {
             cat("\n   d.alt:", x$d.alternative)
             cat("\n   typeII:", x$typeIIerror)
         }

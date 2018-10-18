@@ -17,8 +17,7 @@ doTwoVariablesTest <- function(alpha, epsilon,
                                d.alternative = NULL,
                                iterations, max.iterations,
                                testFunction, x1, x2,
-                               ...)
-{
+                               ...) {
     ## dots: contains parameters/variables that are particular to the
     ## testing function. they will be passed to the function
     dots <- list(...)
@@ -42,9 +41,7 @@ doTwoVariablesTest <- function(alpha, epsilon,
                                         alpha = alpha - epsilon)
                 d.alternative <- optimaltypeII$root
             }, silent = TRUE)
-        }
-        else {
-
+        } else {
             ## npMeanUnpaired
             res <- try({
                 optimaltypeII <- optimize(npMeanUnpairedminTypeIIErrorWrapper,
@@ -107,7 +104,5 @@ doTwoVariablesTest <- function(alpha, epsilon,
                         iterations.taken = length(rejMatrix),
                         pseudoalpha = pseudoalpha)
     }
-
     return(results)
-
 }

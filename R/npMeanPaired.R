@@ -97,8 +97,7 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
                          alternative = "two.sided",
                          epsilon = 1 * 10^(-6),
                          iterations = 5000,
-                         max.iterations = 100000)
-{
+                         max.iterations = 100000) {
     method <- "Nonparametric Mean Test for Matched Pairs"
     names.x1 <- deparse(substitute(x1))
     names.x2 <- deparse(substitute(x2))
@@ -134,8 +133,7 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
     x1 <- as.vector(x1)
     x2 <- as.vector(x2)
 
-    if(any(is.na(c(x1, x2))) == TRUE)
-    {
+    if(any(is.na(c(x1, x2))) == TRUE) {
         warning("Pairs containing NA's were removed completely.")
         complete <- complete.cases(cbind(x1, x2))
         x1 <- x1[complete]
@@ -171,18 +169,17 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
     x1 <- (x1 - lower)/(upper - lower)
     x2 <- (x2 - lower)/(upper - lower)
 
-    if(alternative == "two.sided")
-    {
+    if(alternative == "two.sided") {
         ##
         ## alternative "less" at alpha / 2
         ##
         resultsLess <- doTwoVariablesTest(alpha = alpha / 2,
-                                             epsilon = epsilon,
-                                             iterations = iterations,
-                                             max.iterations = max.iterations,
-                                             testFunction = McNemarTestRandom,
-                                             x1 = x1, x2 = x2,
-                                             p = 0.5, n = n)
+                                          epsilon = epsilon,
+                                          iterations = iterations,
+                                          max.iterations = max.iterations,
+                                          testFunction = McNemarTestRandom,
+                                          x1 = x1, x2 = x2,
+                                          p = 0.5, n = n)
 
         ##
         ## alternative "greater" at alpha / 2
@@ -191,36 +188,32 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
         x2 <- 1 - x2
 
         resultsGreater <- doTwoVariablesTest(alpha = alpha / 2,
-                                          epsilon = epsilon,
-                                          theta = resultsLess[["theta"]],
-                                          typeII = resultsLess[["typeIIerror"]],
-                                          d.alternative = resultsLess[["d.alternative"]],
-                                          iterations = iterations,
-                                          max.iterations = max.iterations,
-                                          testFunction = McNemarTestRandom,
-                                          x1 = x1, x2 = x2,
-                                          p = 0.5, n = n)
+                                             epsilon = epsilon,
+                                             theta = resultsLess[["theta"]],
+                                             typeII = resultsLess[["typeIIerror"]],
+                                             d.alternative = resultsLess[["d.alternative"]],
+                                             iterations = iterations,
+                                             max.iterations = max.iterations,
+                                             testFunction = McNemarTestRandom,
+                                             x1 = x1, x2 = x2,
+                                             p = 0.5, n = n)
 
-
-        ## "greater" rejects
         if(resultsGreater[["rejection"]] == TRUE) {
+            ## "greater" rejects
             results <- resultsGreater
             theta <- resultsGreater[["theta"]]
-        }
-        ## "less" rejects
-        else if(resultsLess[["rejection"]] == TRUE) {
+        } else if(resultsLess[["rejection"]] == TRUE) {
+            ## "less" rejects
             results <- resultsLess
             results[["d.alternative"]] <- 1 - results[["d.alternative"]]
             theta <- resultsLess[["theta"]]
-        }
-        ## none rejects:
-        ## we take the one that is more likely to reject
-        else {
+        } else {
+            ## none rejects:
+            ## we take the one that is more likely to reject
             if((sample.est[1] - sample.est[2] > 0) & !is.null(resultsGreater[["theta"]])) {
                 results <- resultsGreater
                 theta <- resultsGreater[["theta"]]
-            }
-            else if((sample.est[1] - sample.est[2] < 0) & !is.null(resultsLess[["theta"]])) {
+            } else if((sample.est[1] - sample.est[2] < 0) & !is.null(resultsLess[["theta"]])) {
                 results <- resultsLess
                 theta <- resultsLess[["theta"]]
                 results[["d.alternative"]] <- 1 - results[["d.alternative"]]
@@ -234,17 +227,13 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
 
         ## if rejection in a two.sided setting, we inform the user of the
         ## side of rejection
-        if(results[["rejection"]] == TRUE)
-        {
+        if(results[["rejection"]] == TRUE) {
             alt.hypothesis <- paste("E(", names.x1, ")",
                                     ifelse(resultsGreater[["rejection"]] == TRUE, " < ", " > "),
                                     "E(", names.x2, ")", sep = "")
         }
-    }
-    else
-    {
-        if(alternative == "greater")
-        {
+    } else {
+        if(alternative == "greater") {
             x1 <- 1 - x1
             x2 <- 1 - x2
         }
@@ -300,8 +289,7 @@ npMeanPaired <- function(x1, x2, lower = 0, upper = 1, ## d = 0,
 ## @param pseudoalpha level of alpha for each iteration
 ## @param dots special paramenters to the function
 ## @importFrom stats runif
-McNemarTestRandom <- function(x1, x2, pseudoalpha, dots)
-{
+McNemarTestRandom <- function(x1, x2, pseudoalpha, dots) {
     ## b1, b2 are binary-valued vectors of equal length
     ## n10, n01 ... counts of (1,0) and (0,1) respectively.
     ##              (1, 1) and (0, 0) are dropped
@@ -321,15 +309,11 @@ McNemarTestRandom <- function(x1, x2, pseudoalpha, dots)
     prob <- sum(choose(n10 + n01, k)/(2^(n10 + n01)))
 
     res <- 0
-    if(prob <= pseudoalpha)
-    {
+    if(prob <= pseudoalpha) {
         res <- 1
-    }
-    else
-    {
+    } else {
         h <- choose(n10 + n01, n01)/(2^(n10 + n01))
-        if(prob <= (pseudoalpha + h))
-        {
+        if(prob <= (pseudoalpha + h)) {
             res <- (pseudoalpha - prob + h)/h
         }
     }

@@ -11,8 +11,7 @@
 ## @importFrom stats uniroot
 doOneVariableTest <- function(alpha, epsilon,
                               iterations, max.iterations,
-                              testFunction, p, n, ...)
-{
+                              testFunction, p, n, ...) {
     testFunction <- match.fun(testFunction)
     dots <- list(...)
 
@@ -65,8 +64,6 @@ doOneVariableTest <- function(alpha, epsilon,
                         mc.error = error,
                         iterations.taken = length(rejMatrix),
                         pseudoalpha = pseudoalpha)
-
     }
-
     return(results)
 }

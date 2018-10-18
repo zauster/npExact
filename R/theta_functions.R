@@ -5,15 +5,13 @@
 noValidTheta <- simpleError("It was not possible to find a valid theta (i.e., one that minimizes the type II error). Please adjust the test value under the null hypothesis to a less (extreme) value.")
 
 ## helper function, to ease the reading of the code
-w <- function(x)
-    {
+w <- function(x) {
         as.numeric(x >= 0)
     }
 
 ## g1 helper function
 ## @importFrom stats pbinom
-g1 <- function(k, N, z, alpha = 0.05)
-    {
+g1 <- function(k, N, z, alpha = 0.05) {
         ## if alpha < term2 -> 0
         ## if alpha > term1 -> 1
         ## else calculate the fraction term
@@ -26,8 +24,7 @@ g1 <- function(k, N, z, alpha = 0.05)
 
 ## g2
 ## helper function
-g2 <- function(mu, N, z, alpha)
-    {
+g2 <- function(mu, N, z, alpha) {
         k <- 0:(N - 1)
 
         ## term2
@@ -51,8 +48,7 @@ g2 <- function(mu, N, z, alpha)
 
 ## possibleTheta
 ## Calculates possible values of theta, which are in interval (0,1)
-possibleTheta <- function(N, p, alpha)
-{
+possibleTheta <- function(N, p, alpha) {
     k <- 0:N
     ## j <- lapply(k, function(x)x:N)
     ## theta <- sapply(j,
@@ -75,14 +71,12 @@ possibleTheta <- function(N, p, alpha)
 }
 
 
-minTypeIIError <- function(p.alt, p, N, alpha, alternative)
-{
+minTypeIIError <- function(p.alt, p, N, alpha, alternative) {
     ## Calculates minimum value, for given difference d
     ## uses possibleTheta, g2
     theta <- possibleTheta(N, p, alpha)
 
     if(length(theta[2, ]) > 0) {
-
         f <- function(x) {
             (1 - g2(p.alt, N, p, alpha*x))/(1 - x)
         }
@@ -91,8 +85,7 @@ minTypeIIError <- function(p.alt, p, N, alpha, alternative)
         typeIIerrors <- sapply(theta[2,], f)
 
         ## if no sensible theta was found, set the type II error to 1
-        if(!is.numeric(typeIIerrors))
-        {
+        if(!is.numeric(typeIIerrors)) {
             typeIIerrors <- 1
         }
 
@@ -108,9 +101,7 @@ minTypeIIError <- function(p.alt, p, N, alpha, alternative)
          typeII = mintypeII)
 }
 
-minTypeIIErrorWrapper <- function(p.alt, p, N, alpha,
-                                  typeIIgoal = .5)
-    {
+minTypeIIErrorWrapper <- function(p.alt, p, N, alpha, typeIIgoal = .5) {
         minTypeIIError(p.alt, p, N, alpha)$typeII - typeIIgoal
     }
 
