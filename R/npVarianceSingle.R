@@ -284,11 +284,13 @@ sampleBinomTestnpVar <- function(p, n, pseudoalpha, dots) {
     ##                lower.tail = ifelse(alternative == "greater",
     ##                  TRUE, FALSE)) ## not exact
 
-    if(prob <= pseudoalpha) ## reject with probability 1 {
+    if(prob <= pseudoalpha) {
+        ## reject with probability 1
         res <- 1
     } else {
         h <- dbinom(zeros, zeros + ones, p) ## more efficient
-        if (prob <= pseudoalpha + h) ##(reject with positive probability) {
+        if (prob <= pseudoalpha + h) {
+            ##(reject with positive probability)
             res <- ((pseudoalpha - prob + h) / h)
         } else {
             res <- 0
