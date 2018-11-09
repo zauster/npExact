@@ -61,18 +61,18 @@
 ##' } \item{iterations}{ the number of iterations that were performed.  }
 ##' @author Karl Schlag, Peter Saffert and Oliver Reiter
 ##' @seealso
-##' \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
+##' \url{https://homepage.univie.ac.at/karl.schlag/statistics.php}
 ##' @references Schlag, Karl H. 2008, A New Method for Constructing Exact Tests
 ##' without Making any Assumptions, Department of Economics and Business
 ##' Working Paper 1109, Universitat Pompeu Fabra. Available at
-##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1109}.
+##' \url{https://ideas.repec.org/p/upf/upfgen/1109.html}.
 ##' @keywords unpaired data stochastic inequality
 ##' @examples
 ##'
 ##' data(french)
-##' x <- french[, 1]
-##' y <- french[, 2]
-##' npStochinUnpaired(x, y, ignoreNA = TRUE)
+##' origin <- french$french.origin
+##' rest <- french$rest.of.civil
+##' npStochinUnpaired(origin, rest, ignoreNA = TRUE)
 ##'
 ##' @export npStochinUnpaired
 npStochinUnpaired <- function(x1, x2, d = 0,

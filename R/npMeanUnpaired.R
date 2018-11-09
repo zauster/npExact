@@ -65,17 +65,17 @@
 ##' \item{iterations}{ the number of iterations that were performed.  }
 ##' @author Karl Schlag, Christian Pechhacker, Peter Saffert and Oliver Reiter
 ##' @seealso
-##' \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
+##' \url{https://homepage.univie.ac.at/karl.schlag/statistics.php}
 ##' @references Karl Schlag (2008), A New Method for Constructing Exact Tests
 ##' without Making any Assumptions. Available at
-##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1109}.
+##' \url{https://ideas.repec.org/p/upf/upfgen/1109.html}.
 ##' @keywords unpaired data mean test
 ##' @examples
 ##'
 ##' ## test whether countries with french origin score lower than
 ##' ## countries with no french origin
 ##' data(french)
-##' npMeanUnpaired(french[,1], french[,2], alternative = "less", ignoreNA =
+##' npMeanUnpaired(french[[1]], french[[2]], alternative = "less", ignoreNA =
 ##' TRUE)
 ##'
 ##' ## test whether American tend to be more generous than Isrealis

@@ -53,18 +53,17 @@
 ##' } \item{iterations}{ the number of iterations that were performed.  }
 ##' @author Karl Schlag and Oliver Reiter
 ##' @seealso
-##' \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
+##' \url{https://homepage.univie.ac.at/karl.schlag/statistics.php}
 ##' @references Karl Schlag (2008).  Exact tests for correlation and for the
 ##' slope in simple linear regressions without making assumptions. Available at
-##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1097}.
+##' \url{https://ideas.repec.org/p/upf/upfgen/1097.html}.
 ##' @keywords variance test single sample
 ##' @examples
 ##'
 ##' ## see if the minority share holder shores have a variance greater
 ##' ## than 0.05
 ##' data(mshscores)
-##'
-##' scores <- as.vector(as.matrix(mshscores))
+##' scores <- unlist(mshscores)
 ##' npVarianceSingle(scores, lower = 0, upper = 1, v = 0.05, ignoreNA = TRUE)
 ##'
 ##' @export npVarianceSingle

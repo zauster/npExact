@@ -69,11 +69,11 @@
 ##' } \item{iterations}{ the number of iterations that were performed.  }
 ##' @author Karl Schlag, Christian Pechhacker and Oliver Reiter
 ##' @seealso
-##' \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
+##' \url{https://homepage.univie.ac.at/karl.schlag/statistics.php}
 ##' @references Schlag, Karl H. 2008, A New Method for Constructing Exact Tests
 ##' without Making any Assumptions, Department of Economics and Business
 ##' Working Paper 1109, Universitat Pompeu Fabra. Available at
-##' \url{http://www.econ.upf.edu/en/research/onepaper.php?id=1109}.
+##' \url{https://ideas.repec.org/p/upf/upfgen/1109.html}.
 ##' @keywords pairwise mean test
 ##' @examples
 ##'

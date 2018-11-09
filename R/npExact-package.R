@@ -25,7 +25,7 @@
 ##' @seealso
 ##'     \url{http://homepage.univie.ac.at/karl.schlag/research/statistics/exacthypothesistesting8.pdf}
 ##'
-##' \url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
+##' \url{https://homepage.univie.ac.at/karl.schlag/statistics.php}
 ##' @references Karl Schlag, A New Method for Constructing Exact
 ##'     Tests without Making any Assumptions (August, 2008)
 ##'     Department of Economics and Business Working Paper 1109,
@@ -49,20 +49,18 @@
 ##' ## test whether countries with french origin score lower than
 ##' ## countries with no french origin
 ##' data(french)
-##' npMeanUnpaired(french[,1], french[,2], alternative = "less", ignoreNA =
-##' TRUE)
+##' origin <- french$french.origin
+##' rest <- french$rest.of.civil
+##' npMeanUnpaired(origin, rest, alternative = "less", ignoreNA = TRUE)
 ##'
 ##' ## npStochin
-##' data(french)
-##' x <- french[, 1]
-##' y <- french[, 2]
-##' npStochinUnpaired(x, y, ignoreNA = TRUE)
+##' npStochinUnpaired(origin, rest, ignoreNA = TRUE)
 ##'
 ##' ## npVarianceSingle
 ##' ## see if the minority share holder shores have a variance greater
 ##' ## than 0.05
 ##' data(mshscores)
-##' scores <- as.vector(as.matrix(mshscores))
+##' scores <- unlist(mshscores)
 ##' npVarianceSingle(scores, lower = 0, upper = 1, v = 0.05, ignoreNA = TRUE)
 ##'
 ##' @import stats
@@ -111,9 +109,6 @@ NULL
 NULL
 
 
-
-
-
 ##' Indices of minority shareholder protection of countries with common and
 ##' with civil law.
 ##'
@@ -132,7 +127,6 @@ NULL
 ##'     430-465.
 ##' @keywords datasets
 NULL
-
 
 
 ##' Pain experienced before and after a knie operation
