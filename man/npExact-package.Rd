@@ -9,22 +9,22 @@
 \code{npExact} provides distribution-free hypothesis tests.
 }
 \details{
-This package contains several new hypothesis tests, which do not
-require that the user makes assumptions on the underlying
+This package contains several new hypothesis tests, which do
+not require that the user makes assumptions on the underlying
 distributions.
 
-However, all tests except \code{npStochin} can only be applied if
-there are exogenously given bounds known to the user before
-gathering the data such that it is known by definition of the
-underlying process that all observations lie within these bounds.
+However, all tests except \code{npStochin} can only be
+applied if there are exogenously given bounds known to the
+user before gathering the data such that it is known by
+definition of the underlying process that all observations
+lie within these bounds.
 
-So for instance, if the data involves percentages then the lower
-bound is 0 and the upper bound is 100, by definition of the data
-and not something (like normality) that cannot be deduced from the
-properties of the data.
+So for instance, if the data involves percentages then the
+lower bound is 0 and the upper bound is 100, by definition of
+the data and not something (like normality) that cannot be
+deduced from the properties of the data.
 }
 \examples{
-
 
 ## npMeanPaired
 ## test whether pain after the surgery is less than before the surgery
@@ -43,34 +43,33 @@ npMeanSingle(us_offers, mu = 5, lower = 0, upper = 10, alternative =
 ## test whether countries with french origin score lower than
 ## countries with no french origin
 data(french)
-npMeanUnpaired(french[,1], french[,2], alternative = "less", ignoreNA =
-TRUE)
+origin <- french$french.origin
+rest <- french$rest.of.civil
+npMeanUnpaired(origin, rest, alternative = "less", ignoreNA = TRUE)
 
 ## npStochin
-data(french)
-x <- french[, 1]
-y <- french[, 2]
-npStochinUnpaired(x, y, ignoreNA = TRUE)
+npStochinUnpaired(origin, rest, ignoreNA = TRUE)
 
 ## npVarianceSingle
 ## see if the minority share holder shores have a variance greater
 ## than 0.05
 data(mshscores)
-scores <- as.vector(as.matrix(mshscores))
+scores <- unlist(mshscores)
 npVarianceSingle(scores, lower = 0, upper = 1, v = 0.05, ignoreNA = TRUE)
 
 }
 \references{
-Karl Schlag, A New Method for Constructing Exact Tests without
-Making any Assumptions (August, 2008) Department of Economics and Business
-Working Paper 1109, Universitat Pompeu Fabra
+Karl Schlag, A New Method for Constructing Exact
+    Tests without Making any Assumptions (August, 2008)
+    Department of Economics and Business Working Paper 1109,
+    Universitat Pompeu Fabra
 }
 \seealso{
 \url{http://homepage.univie.ac.at/karl.schlag/research/statistics/exacthypothesistesting8.pdf}
 
-\url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
+\url{https://homepage.univie.ac.at/karl.schlag/statistics.php}
 }
 \author{
-Karl Schlag, Oliver Reiter, Peter Saffert, Christian Pechhacker,
-Simona Jokubauskaite, Tautvilas Janusauskas
+Karl Schlag, Oliver Reiter, Peter Saffert, Christian
+    Pechhacker, Simona Jokubauskaite, Tautvilas Janusauskas
 }

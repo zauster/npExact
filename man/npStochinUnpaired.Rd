@@ -82,19 +82,19 @@ the paper.
 \examples{
 
 data(french)
-x <- french[, 1]
-y <- french[, 2]
-npStochinUnpaired(x, y, ignoreNA = TRUE)
+origin <- french$french.origin
+rest <- french$rest.of.civil
+npStochinUnpaired(origin, rest, ignoreNA = TRUE)
 
 }
 \references{
 Schlag, Karl H. 2008, A New Method for Constructing Exact Tests
 without Making any Assumptions, Department of Economics and Business
 Working Paper 1109, Universitat Pompeu Fabra. Available at
-\url{http://www.econ.upf.edu/en/research/onepaper.php?id=1109}.
+\url{https://ideas.repec.org/p/upf/upfgen/1109.html}.
 }
 \seealso{
-\url{http://homepage.univie.ac.at/karl.schlag/research/statistics.html}
+\url{https://homepage.univie.ac.at/karl.schlag/statistics.php}
 }
 \author{
 Karl Schlag, Peter Saffert and Oliver Reiter

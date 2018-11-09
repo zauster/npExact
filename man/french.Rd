@@ -3,10 +3,11 @@
 \docType{data}
 \name{french}
 \alias{french}
-\title{Indices of minority shareholder protection of countries with civil law with
-and without french origin.}
-\format{A dataframe containing 32 observations of countries with french
-origin and 19 countries without french origin.}
+\title{Indices of minority shareholder protection of countries with
+civil law with and without french origin.}
+\format{A list containing a vector of 32 observations of
+    countries with french origin and a vector of 19 countries
+    without french origin.}
 \description{
 This data contains the indices of minority shareholder protection on a
 scale from 0 to 1 in 51 countries with civil law, differentiating between
@@ -15,8 +16,9 @@ origin. A higher value of the index means that country is more protected.
 The data set is taken from Djankov et al. (2008).
 }
 \references{
-Djankov, S., La Porta, R., Lopez-de-Silanes, F., & Shleifer, A.
-(2008). The law and economics of self-dealing. Journal of financial
-economics, 88(3), 430-465.
+Djankov, S., La Porta, R., Lopez-de-Silanes, F.,
+    & Shleifer, A. (2008). The law and economics of
+    self-dealing. Journal of financial economics, 88(3),
+    430-465.
 }
 \keyword{datasets}
