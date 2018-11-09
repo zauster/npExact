@@ -110,6 +110,7 @@ difference is greater than a certain value (assume that this
 value is somehow derived from theory or history).
 
 ```{r, npMeanSingle_1}
+library(npExact)
 ## load the data
 data(pain)
 ## calculate the difference before and after the treatment
