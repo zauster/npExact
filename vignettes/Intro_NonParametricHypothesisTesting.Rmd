@@ -1,0 +1,190 @@
+---
+title: Introduction to Non-Parametric Hypothesis Testing
+
+author: "Karl Schlag, Oliver Reiter"
+
+numbersections: true
+
+keywords:
+  - Hypothesis testing
+  - Nonparametric
+  - Distribution free
+
+date: "`r Sys.Date()`"
+
+output: rmarkdown::pdf_document
+
+vignette: >
+  %\VignetteIndexEntry{Introduction to Nonparametric Hypothesis Testing}
+  %\VignetteKeywords{Hypothesis testing, Nonparametric, distribution free}
+  %\VignettePackage{npExact}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+<!--
+output: pinp::pinp
+fontsize: 9pt
+one_column: true
+footer_contents: "npExact Vignette"
+author:
+  - name: Karl Schlag
+    affiliation: a
+  - name: Oliver Reiter
+    affiliation: b
+
+
+address:
+  - code: a
+    address: \url{https://homepage.univie.ac.at/karl.schlag/statistics.php}
+  - code: b
+    address: \url{https://wiiw.ac.at/oliver-reiter-s-1048.html}
+
+abstract: |
+   This vignette gives a short overview of the possible usages of
+   the `npExact` package.
+
+-->
+
+# Installation
+
+To install the package `npExact`, just install as you would
+install any other package:
+
+```r
+install.packages("npExact")
+```
+
+If you want to use the development version of `npExact`, you have
+to install the package `devtools`, after which you can use the
+following lines:
+
+```r
+library(devtools)
+install_github("zauster/npExact")
+```
+
+## Getting help
+
+To get help for a specific function, consult the documentation
+for that function:
+
+```r
+?npMeanSingle
+```
+
+# Included data
+
+`npExact` comes with five example dataset that can illustrate the
+usage of the package.
+
+## Matched pair data
+
+- Level of pain before and after an operation: `pain`
+- Uncertainty in a game theoretical experiment: `uncertainty`
+
+## Two independent samples
+
+- Indices of minority shareholder protection of countries with
+  civil law with and without french origin: `french`
+- Indices of minority shareholder protection of countries with
+  common and with civil law: `mshscores`
+- Amount sent in the Ultimatum game: `bargaining`
+
+# Hypothesis tests
+
+This section will give an overview of all hypothesis tests that
+are included in this package.
+
+## npMeanSingle
+
+The function `npMeanSingle` can be used to test if the mean of a
+sample is greater or smaller than or different to a given value
+(this value is called `mu`). This test requires the user to know
+the lower and upper bounds of the data generating process that
+produced the sample at hand.
+
+In the example below, we will calculate the difference of the
+level of pain before and after an operation and test whether the
+difference is greater than a certain value (assume that this
+value is somehow derived from theory or history).
+
+```{r, npMeanSingle_1}
+## load the data
+data(pain)
+## calculate the difference before and after the treatment
+diff <- pain$before - pain$after
+## test if difference is greater than a certain point, here 50
+npMeanSingle(diff, mu = 50, low = 0, up = 100,
+             alpha = 0.05, alternative = "greater")
+```
+
+## npMeanPaired
+
+We also provide an exact test that can be used to test whether the
+mean of  $x_1$ is greater (or less or different) than the
+mean of  $x_2$ when the observations in the vectors $x_1$ 
+and $x_2$ are paired, with different pairs being independently 
+generated.
+
+When using the setting `alternative = "greater"`, the tested null
+hypothesis is $H_0: E(x_1) <= E(x_2)$ and the alternative hypothesis
+is $H_1: E(x_1) > E(x_2)$.
+
+```{r, npMeanPaired_1}
+data(pain)
+npMeanPaired(x1 = pain$before, x2 = pain$after,
+             alternative = "greater",
+             lower = 0, upper = 100)
+```
+
+As with the `npMeanSingle` test, this test requires the user to 
+know the logical bounds of the data generating process of $x_1$ 
+and $x_2$ beforehand.
+
+## npMeanUnpaired
+
+For the case when observations are not paired but the bounds of
+the two independent data generating processes are known, we can
+still test whether the variable $x_1$ has a mean greater or equal 
+to the variable $x_2$. This test can be carried out with the 
+`npMeanUnpaired` function:
+
+```{r, npMeanUnpaired_1}
+data(french)
+npMeanUnpaired(french$french.origin, french$rest.of.civil,
+               alternative = "less",
+               lower = 0, upper = 1)
+```
+
+
+## npStochinUnpaired
+
+`npStochinUnpaired` can be used to test for stochastic inequality
+which is defined as: $H_0 : P(X_2 > X_1) <= P(X_2 < X_1) + d$
+where $d$ can take any value in $[-1, 1]$.
+
+```{r, npStochinUnpaired_1}
+data(french)
+origin <- french$french.origin
+rest <- french$rest.of.civil
+npStochinUnpaired(origin, rest, alternative = "less")
+```
+
+## npVarianceSingle
+
+The last presented test here is a test on the variance of a random variable.
+As in the tests described above, no distributional information is
+needed other than the logical bounds of the data generating
+process.
+
+```{r, npVarianceSingle_1}
+data(mshscores)
+npVarianceSingle(mshscores$civil, lower = 0, upper = 1, v = 0.1,
+                 alternative = "less")
+```
+
+
+# References
+
+Possibly include some references here.
