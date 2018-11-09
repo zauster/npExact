@@ -28,7 +28,6 @@ doTwoVariablesTest <- function(alpha, epsilon,
     results <- NULL
     if(is.null(theta)) {
         if(deparse(substitute(testFunction)) != "randomTest") {
-
             ## npStochinUnpaired and npMeanPaired
             res <- try({
                 optimaltypeII <- uniroot(minTypeIIErrorWrapper,
@@ -73,7 +72,8 @@ doTwoVariablesTest <- function(alpha, epsilon,
                             iterations.taken = 1000,
                             pseudoalpha = NULL)
 
-        } else { ## if everything worked out, can compute theta
+        } else {
+            ## everything worked out, theta was computed
             typeII <- theta$typeII
             theta <- theta$theta
         }
@@ -92,6 +92,19 @@ doTwoVariablesTest <- function(alpha, epsilon,
                                                   dots)))
             rej <- mean(rejMatrix)
             error <- exp(-2 * length(rejMatrix) * (rej - theta)^2)
+
+            ## probably better, since no re-allocation of matrices
+            ## (outside of while)
+            ## iterations.done <- 0
+            ## rej <- 0
+            ## (inside of while)
+            ## tmpRes <- mean(replicate(iterations,
+            ##                          testFunction(x1, x2, pseudoalpha
+            ##                                       dots)))
+            ## rej <- weighted.mean(x = c(rej, tmpRes),
+            ##                      w = c(iterations.done, iterations))
+            ## iterations.done <- iterations.done + iterations
+            ## error <- exp(-2 * iterations.done * (rej - theta)^2)
         }
 
         results <- list(probrej = rej,
