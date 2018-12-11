@@ -2,13 +2,21 @@ npExact
 =======
 [![Travis-CI Build Status](https://travis-ci.org/zauster/npExact.png?branch=master)](https://travis-ci.org/zauster/npExact)
 [![codecov](https://codecov.io/gh/zauster/npExact/branch/master/graph/badge.svg)](https://codecov.io/gh/zauster/npExact)
+[![Rdoc](http://www.rdocumentation.org/badges/version/npExact)](http://www.rdocumentation.org/packages/npExact) 
+
 
 Installation
 ------------
 
-As this package is still in development, I can not yet be installed through CRAN.
+As this package is still in development, but can already be
+installed through CRAN.
 
-This development version can, however, be installed using the `devtools` package:
+```r
+install.packages("npExact")
+```
+
+The development version can be installed using the `devtools`
+package:
 
 ```r
 if (!require('devtools')) install.packages('devtools')
