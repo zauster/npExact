@@ -38,3 +38,18 @@ See the help-files for some examples of the usage of the package.
 ```r
 help("npExact")
 ```
+
+Contributing
+-----
+
+First of all, I am happy if you use the package and even happier
+if you want to contribute.
+
+Open an issue if you think you found a bug or if you have an idea
+for a new feature.
+
+Contributions are best done through pull requests (have a look at
+the current development at the [develop
+branch](https://github.com/zauster/npExact/tree/develop)). Please
+run `R CMD build npExact` and `R CMD check
+npExact_VERSION.tar.gz` before you submit your changes.
